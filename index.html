@@ -1,0 +1,1981 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' https://*.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
+<title>Encuesta sobre inventario en PYMES</title>
+<meta name="description" content="Encuesta escolar confidencial sobre el manejo del inventario y los resultados económicos en pequeñas y medianas empresas.">
+<style>
+:root {
+  --violet: #6d28d9; --violet-strong: #5b21b6; --violet-soft: #ede9fe;
+  --teal: #0f766e; --teal-bright: #14b8a6; --teal-soft: #ccfbf1;
+  --bg: #f7f7fb; --surface: #ffffff; --surface-2: #f3f1fa;
+  --text: #1f1b2e; --muted: #575169; --line: #dcd8ea;
+  --danger: #b42318; --danger-soft: #fdecea; --warn: #8a5300; --warn-soft: #fff4dc;
+  --ok: #0f6b3a; --ok-soft: #e3f6ea;
+  --radius: 14px; --shadow: 0 1px 2px rgba(31,27,46,.06), 0 6px 20px rgba(31,27,46,.06);
+  --focus: 0 0 0 3px #fff, 0 0 0 6px #7c3aed;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --violet: #a78bfa; --violet-strong: #c4b5fd; --violet-soft: #2a2141;
+    --teal: #5eead4; --teal-bright: #2dd4bf; --teal-soft: #123b37;
+    --bg: #14121c; --surface: #1d1a28; --surface-2: #252134;
+    --text: #f2f0f8; --muted: #b7b1c9; --line: #3a3550;
+    --danger: #ff8a80; --danger-soft: #3a1d1d; --warn: #ffcf70; --warn-soft: #3a2d12;
+    --ok: #7ee2a8; --ok-soft: #173325;
+    --shadow: none; --focus: 0 0 0 3px #14121c, 0 0 0 6px #c4b5fd;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --violet: #a78bfa; --violet-strong: #c4b5fd; --violet-soft: #2a2141;
+  --teal: #5eead4; --teal-bright: #2dd4bf; --teal-soft: #123b37;
+  --bg: #14121c; --surface: #1d1a28; --surface-2: #252134;
+  --text: #f2f0f8; --muted: #b7b1c9; --line: #3a3550;
+  --danger: #ff8a80; --danger-soft: #3a1d1d; --warn: #ffcf70; --warn-soft: #3a2d12;
+  --ok: #7ee2a8; --ok-soft: #173325;
+  --shadow: none; --focus: 0 0 0 3px #14121c, 0 0 0 6px #c4b5fd;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font: 400 17px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: 8px; top: -60px; background: var(--surface); color: var(--text); padding: 10px 14px; border-radius: 8px; z-index: 50; }
+.skip:focus { top: 8px; }
+a { color: var(--violet); }
+:focus-visible { outline: none; box-shadow: var(--focus); border-radius: 6px; }
+h1, h2, h3 { line-height: 1.25; margin: 0 0 .5em; }
+h1 { font-size: 1.6rem; } h2 { font-size: 1.3rem; } h3 { font-size: 1.1rem; }
+p { margin: 0 0 .8em; }
+.topbar { height: 6px; background: linear-gradient(90deg, var(--violet), var(--teal-bright)); }
+header.site { background: var(--surface); border-bottom: 1px solid var(--line); }
+header.site .wrap { display: flex; align-items: center; gap: 12px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.02rem; }
+.brand svg { flex: none; }
+.spacer { flex: 1; }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: 16px; padding-right: 16px; }
+.wrap.wide { max-width: 1180px; }
+main { padding: 22px 0 60px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); padding: 22px; margin-bottom: 18px; }
+.card.soft { background: var(--surface-2); box-shadow: none; }
+.muted { color: var(--muted); }
+.small { font-size: 1rem; }
+.badge { display: inline-flex; align-items: center; gap: 6px; border-radius: 999px; padding: 3px 12px; font-size: 1rem; font-weight: 600; background: var(--violet-soft); color: var(--violet-strong); }
+.badge.teal { background: var(--teal-soft); color: var(--teal); }
+.badge.warn { background: var(--warn-soft); color: var(--warn); }
+.badge.danger { background: var(--danger-soft); color: var(--danger); }
+.badge.ok { background: var(--ok-soft); color: var(--ok); }
+.demo-banner { background: repeating-linear-gradient(135deg, var(--warn-soft), var(--warn-soft) 14px, transparent 14px, transparent 28px), var(--warn-soft); color: var(--warn); border-bottom: 2px solid var(--warn); font-weight: 700; padding: 10px 0; text-align: center; }
+.notice { border-radius: 12px; padding: 14px 16px; margin: 0 0 16px; border: 1px solid var(--line); background: var(--surface-2); }
+.notice.danger { background: var(--danger-soft); border-color: var(--danger); color: var(--text); }
+.notice.warn { background: var(--warn-soft); border-color: var(--warn); }
+.notice.ok { background: var(--ok-soft); border-color: var(--ok); }
+.notice strong:first-child { display: block; margin-bottom: 4px; }
+ul.clean { padding-left: 1.2em; margin: 0 0 .8em; }
+ul.clean li { margin-bottom: .35em; }
+.btn { appearance: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 46px; padding: 10px 20px; border-radius: 12px; border: 2px solid transparent; font: inherit; font-weight: 650; cursor: pointer; text-decoration: none; }
+.btn.primary { background: var(--violet); color: #fff; }
+:root[data-theme="dark"] .btn.primary { color: #14121c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.primary { color: #14121c; } }
+.btn.primary:hover { background: var(--violet-strong); }
+.btn.secondary { background: var(--surface); color: var(--violet); border-color: var(--violet); }
+.btn.ghost { background: transparent; color: var(--muted); border-color: var(--line); }
+.btn.danger { background: var(--surface); color: var(--danger); border-color: var(--danger); }
+.btn.small { min-height: 38px; padding: 6px 14px; font-size: .95rem; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 18px; }
+.actions .spacer { min-width: 8px; }
+.linkbtn { background: none; border: none; padding: 4px 2px; color: var(--muted); text-decoration: underline; font: inherit; font-size: 1rem; cursor: pointer; }
+
+/* Progreso */
+.progress { margin-bottom: 18px; }
+.progress .meta { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; font-size: 1rem; color: var(--muted); margin-bottom: 6px; }
+.progress .bar { height: 10px; border-radius: 999px; background: var(--line); overflow: hidden; }
+.progress .bar > span { display: block; height: 100%; background: linear-gradient(90deg, var(--violet), var(--teal-bright)); border-radius: 999px; transition: width .3s ease; }
+.steps { display: flex; gap: 6px; list-style: none; padding: 0; margin: 10px 0 0; flex-wrap: wrap; }
+.steps li { font-size: 1rem; padding: 2px 10px; border-radius: 999px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+.steps li.done { background: var(--teal-soft); color: var(--teal); border-color: transparent; }
+.steps li.current { background: var(--violet); color: #fff; border-color: transparent; font-weight: 700; }
+:root[data-theme="dark"] .steps li.current { color: #14121c; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .steps li.current { color: #14121c; } }
+
+/* Preguntas */
+fieldset.q { border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 16px 14px; margin: 0 0 18px; background: var(--surface); box-shadow: var(--shadow); min-width: 0; }
+fieldset.q.has-error { border-color: var(--danger); border-width: 2px; }
+fieldset.q legend { font-weight: 700; font-size: 1.06rem; padding: 0 6px; margin-left: -6px; float: left; width: 100%; margin-bottom: 12px; }
+fieldset.q legend .num { display: inline-flex; min-width: 2em; height: 2em; align-items: center; justify-content: center; border-radius: 10px; background: var(--violet-soft); color: var(--violet-strong); font-size: 1rem; margin-right: 8px; vertical-align: middle; }
+fieldset.q .hint { clear: both; font-size: 1rem; color: var(--muted); margin: 0 0 10px; }
+.options { clear: both; display: grid; gap: 8px; }
+.opt { position: relative; display: flex; align-items: flex-start; gap: 12px; padding: 12px 14px; border: 2px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; min-height: 50px; transition: border-color .15s, background-color .15s; }
+.opt:hover { border-color: var(--violet); }
+.opt input[type=radio], .opt input[type=checkbox] { width: 22px; height: 22px; margin: 2px 0 0; flex: none; accent-color: var(--violet); cursor: pointer; }
+.opt.is-checked { border-color: var(--violet); background: var(--violet-soft); }
+.opt .lbl { flex: 1; }
+.opt.nosabe { border-style: dashed; }
+.options input.other-input { margin: 0 0 4px 36px; width: calc(100% - 36px); }
+.field { margin-bottom: 16px; }
+.field label, .field .label { display: block; font-weight: 650; margin-bottom: 6px; }
+.field .help { font-size: 1rem; color: var(--muted); margin-top: 4px; }
+input[type=text], input[type=email], input[type=password], input[type=number], input[type=date], select, textarea {
+  width: 100%; font: inherit; color: var(--text); background: var(--surface); border: 2px solid var(--line); border-radius: 10px; padding: 10px 12px; min-height: 46px;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible { border-color: var(--violet); }
+input[aria-invalid="true"], select[aria-invalid="true"], textarea[aria-invalid="true"] { border-color: var(--danger); }
+.err { color: var(--danger); font-weight: 600; font-size: 1rem; margin-top: 6px; display: flex; gap: 6px; align-items: flex-start; }
+.err::before { content: "!"; display: inline-flex; width: 1.25em; height: 1.25em; border-radius: 50%; background: var(--danger); color: var(--surface); align-items: center; justify-content: center; font-size: .8em; flex: none; margin-top: .15em; }
+.grid2 { display: grid; gap: 0 16px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .grid2 { grid-template-columns: 1fr 1fr; } }
+.consent { display: flex; gap: 12px; align-items: flex-start; padding: 14px; border: 2px solid var(--line); border-radius: 12px; cursor: pointer; }
+.consent input { width: 24px; height: 24px; margin-top: 2px; accent-color: var(--violet); flex: none; }
+.consent.is-checked { border-color: var(--teal); background: var(--teal-soft); }
+
+/* Revisión */
+.review-block { margin-bottom: 18px; }
+.review-block header { display: flex; align-items: center; gap: 10px; justify-content: space-between; flex-wrap: wrap; margin-bottom: 8px; }
+dl.review { margin: 0; display: grid; gap: 10px; }
+dl.review div { padding: 10px 12px; background: var(--surface-2); border-radius: 10px; }
+dl.review dt { font-size: .93rem; color: var(--muted); }
+dl.review dd { margin: 2px 0 0; font-weight: 650; }
+.folio { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 1.5rem; letter-spacing: .06em; padding: 10px 16px; border-radius: 12px; background: var(--teal-soft); color: var(--teal); display: inline-block; font-weight: 700; }
+.spinner { width: 18px; height: 18px; border: 3px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.hero { display: grid; gap: 14px; }
+.hero .kicker { color: var(--teal); font-weight: 700; letter-spacing: .02em; text-transform: uppercase; font-size: 1rem; }
+.facts { display: grid; gap: 10px; grid-template-columns: 1fr; margin: 6px 0 4px; }
+@media (min-width: 560px) { .facts { grid-template-columns: repeat(3, 1fr); } }
+.fact { background: var(--surface-2); border-radius: 12px; padding: 12px 14px; }
+.fact b { display: block; font-size: 1.05rem; }
+
+/* Panel */
+.tabs { display: flex; gap: 4px; overflow-x: auto; border-bottom: 2px solid var(--line); margin-bottom: 18px; scrollbar-width: thin; }
+.tabs button { appearance: none; background: none; border: none; font: inherit; font-weight: 650; padding: 10px 14px; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; cursor: pointer; white-space: nowrap; min-height: 44px; }
+.tabs button[aria-selected="true"] { color: var(--violet); border-bottom-color: var(--violet); }
+.kpis { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-bottom: 18px; }
+@media (min-width: 760px) { .kpis { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.kpi .v { font-size: 1.7rem; font-weight: 800; line-height: 1.1; }
+.kpi .l { color: var(--muted); font-size: .92rem; }
+.kpi.violet { border-top: 4px solid var(--violet); } .kpi.teal { border-top: 4px solid var(--teal-bright); }
+.filters { display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) { .filters { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.filters label { font-size: .9rem; font-weight: 650; display: block; margin-bottom: 4px; }
+.qcards { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 980px) { .qcards { grid-template-columns: 1fr 1fr; } }
+.bars { display: grid; gap: 8px; margin-top: 10px; }
+.barrow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 3px; }
+.barrow .top { display: flex; justify-content: space-between; gap: 10px; font-size: .94rem; }
+.barrow .top .n { white-space: nowrap; font-variant-numeric: tabular-nums; font-weight: 650; }
+.barrow .track { height: 12px; background: var(--surface-2); border-radius: 999px; overflow: hidden; border: 1px solid var(--line); }
+.barrow .fill { height: 100%; background: var(--violet); border-radius: 999px; }
+.barrow.nosabe .fill { background: repeating-linear-gradient(45deg, var(--muted), var(--muted) 4px, transparent 4px, transparent 8px); }
+.barrow.alt .fill { background: var(--teal-bright); }
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; }
+table.data { border-collapse: collapse; width: 100%; font-size: .94rem; background: var(--surface); }
+table.data th, table.data td { padding: 9px 10px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+table.data th { background: var(--surface-2); font-weight: 700; position: sticky; top: 0; }
+table.data td.num, table.data th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.data thead th.num { white-space: normal; min-width: 92px; max-width: 170px; vertical-align: bottom; }
+table.data tbody th { min-width: 170px; font-weight: 650; }
+table.data tr.excluded td { color: var(--muted); text-decoration: line-through; text-decoration-color: rgba(127,127,127,.6); }
+.cell-pct { display: block; font-size: .82rem; color: var(--muted); }
+.heat { position: relative; }
+.pager { display: flex; gap: 8px; align-items: center; justify-content: flex-end; margin-top: 10px; flex-wrap: wrap; }
+dialog { border: none; border-radius: 16px; padding: 0; width: min(720px, calc(100vw - 24px)); max-height: calc(100vh - 32px); background: var(--surface); color: var(--text); box-shadow: 0 20px 60px rgba(0,0,0,.35); }
+dialog::backdrop { background: rgba(20, 16, 34, .55); }
+dialog .dhead { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 16px 20px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--surface); z-index: 1; }
+dialog .dbody { padding: 18px 20px; }
+.qr-box { display: flex; gap: 18px; flex-wrap: wrap; align-items: center; }
+.qr-box canvas { background: #fff; border-radius: 12px; padding: 10px; border: 1px solid var(--line); max-width: 100%; height: auto; }
+.empty { text-align: center; padding: 26px 14px; color: var(--muted); }
+.empty b { display: block; color: var(--text); font-size: 1.05rem; margin-bottom: 4px; }
+footer.site { color: var(--muted); font-size: 1rem; padding: 20px 0 40px; text-align: center; }
+.print-only { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
+  .spinner { border-right-color: currentColor; opacity: .6; }
+}
+@media print {
+  .no-print, header.site, .tabs, .filters-card, .actions, .pager, .demo-banner, footer.site, .topbar { display: none !important; }
+  .print-only { display: block; }
+  body { background: #fff; color: #000; font-size: 12pt; }
+  .card, fieldset.q, .kpi { box-shadow: none; border-color: #999; break-inside: avoid; }
+  .tabpanel { display: block !important; }
+  .barrow .fill { background: #555 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .wrap.wide { max-width: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div class="topbar" aria-hidden="true"></div>
+<div id="demo-banner" class="demo-banner" hidden>MODO DEMOSTRACIÓN · Datos ficticios en memoria de esta pestaña · No se guarda nada en la base de datos real</div>
+<header class="site">
+  <div class="wrap" id="header-wrap">
+    <div class="brand">
+      <svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true"><rect x="1" y="1" width="32" height="32" rx="9" fill="#6d28d9"/><rect x="8" y="17" width="5" height="9" rx="1.5" fill="#fff"/><rect x="15" y="12" width="5" height="14" rx="1.5" fill="#5eead4"/><rect x="22" y="8" width="5" height="18" rx="1.5" fill="#fff"/></svg>
+      <span id="brand-text">Encuesta · Inventario en PYMES</span>
+    </div>
+    <span class="spacer"></span>
+    <span id="header-extra"></span>
+  </div>
+</header>
+<main id="main" tabindex="-1">
+  <div id="app" class="wrap"></div>
+</main>
+<div id="live" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<footer class="site"><div class="wrap" id="footer-text">Encuesta confidencial con fines escolares.</div></footer>
+<dialog id="dlg" aria-labelledby="dlg-title"><div class="dhead"><h2 id="dlg-title" style="margin:0;font-size:1.15rem"></h2><button class="btn ghost small" type="button" id="dlg-close">Cerrar</button></div><div class="dbody" id="dlg-body"></div></dialog>
+<noscript><div class="wrap"><div class="notice danger"><strong>Se necesita JavaScript</strong>Esta encuesta necesita JavaScript activado para funcionar.</div></div></noscript>
+<script>
+"use strict";
+/* =====================================================================
+   CONFIGURACIÓN — llena estos valores (ver GUIA.md, sección G).
+   Aquí SOLO van valores públicos. La clave publicable (sb_publishable_...)
+   está hecha para estar en el navegador. NUNCA pongas aquí la clave secreta
+   (sb_secret_...) ni la service_role.
+   ===================================================================== */
+const CONFIG = {
+  SUPABASE_URL: "https://guffiusipdondqssczup.supabase.co",               // ej.: https://abcdefghijkl.supabase.co
+  SUPABASE_PUBLISHABLE_KEY: "sb_publishable_RSZDB55Jj_LqtWf9nvbNYQ_QkzQM7ho",   // ej.: sb_publishable_xxxxxxxxxxxxxxxx
+  FUNCTION_NAME: "submit-response",
+  PUBLIC_URL: "https://emi123olivera.github.io/encuesta-pymes/",                 // ej.: https://tu-usuario.github.io/encuesta-pymes/
+  INVESTIGADOR: "Emilio Alexander Olivera Portillo",               // opcional: nombre del investigador responsable
+  INSTITUCION: "INLUSA",                // opcional: escuela o institución
+  CONTACTO: "emi3103olivera@gmail.com",                   // opcional: correo u otro medio para dudas
+  CONSERVACION: "",               // opcional: cuánto tiempo se guardarán los datos y qué pasa después
+  POLL_SECONDS: 60                // actualización periódica del panel (no es tiempo real)
+};
+
+/* Bibliotecas externas: versión fija + integridad (SRI). Solo se cargan en el
+   panel; el cuestionario funciona sin ellas. */
+const LIBS = {
+  supabase: { src: "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js",
+              integrity: "sha384-TcHRA3zBbn+Lexh5n+Oil4guNPOS3rjNDpGRAN46u/s/mB2IZ50ceC6TYDU2yvgK" },
+  qrcode:   { src: "https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js",
+              integrity: "sha384-8FWZA6BGMXhsfO+BLtrJK0We6gg5o1JyO8xQm6peWDEUs17ACA5ziE/NIAkl9z2k" }
+};
+
+/* =====================================================================
+   INSTRUMENTO — texto literal del cuestionario. Debe coincidir EXACTAMENTE
+   con encuesta.questions/options del SQL; la página compara su huella con
+   la del servidor y bloquea el envío si son distintas.
+   o(código, etiqueta, banderas) -> banderas: O = abre "Otro", X = excluyente,
+   N = "No sé", 1 = suma un punto de control.
+   ===================================================================== */
+function o(code, label, flags) {
+  flags = flags || "";
+  return { code: code, label: label, other: flags.includes("O"), exclusive: flags.includes("X"),
+           nosabe: flags.includes("N"), points: flags.includes("1") ? 1 : 0 };
+}
+const INSTRUMENT = {
+  survey_id: "inventario-pymes-2026",
+  instrument_version: "v1",
+  consent_version: "c1-confidencial",
+  title: "Encuesta sobre el manejo del inventario y los resultados económicos en pequeñas y medianas empresas (PYMES)",
+  blocks: [
+    { n: 1, title: "Sobre el negocio", qs: ["p1", "p2", "p3"] },
+    { n: 2, title: "Cómo se maneja el inventario", qs: ["p4", "p5", "p6", "p7", "p8", "p9"] },
+    { n: 3, title: "Problemas y pérdidas", qs: ["p10", "p11", "p12"] },
+    { n: 4, title: "Resultados económicos", qs: ["p13", "p14", "p15"] }
+  ],
+  questions: [
+    { code: "p1", num: 1, kind: "single", block: 1, prompt: "¿A qué se dedica principalmente el negocio? (Marque una)", options: [
+      o("comercio", "Comercio: compra y venta de productos"), o("industria", "Industria: fabricación o transformación de productos"),
+      o("servicios", "Servicios que también venden o usan productos"), o("otro", "Otro:", "O")] },
+    { code: "p2", num: 2, kind: "single", block: 1, prompt: "¿Cuál es su puesto en el negocio? (Marque una)", options: [
+      o("dueno", "Dueño(a)"), o("administrador", "Administrador(a) o gerente"),
+      o("encargado", "Encargado(a) de almacén o inventario"), o("otro", "Otro:", "O")] },
+    { code: "p3", num: 3, kind: "single", block: 1, prompt: "¿Cuántas personas trabajan en el negocio, contando a usted? (Marque una)", options: [
+      o("1_10", "De 1 a 10"), o("11_30", "De 11 a 30"), o("31_50", "De 31 a 50"),
+      o("51_100", "De 51 a 100"), o("101_250", "De 101 a 250"), o("mas_250", "Más de 250")] },
+    { code: "p4", num: 4, kind: "single", block: 2, prompt: "¿Qué herramienta usa principalmente el negocio para llevar el control del inventario? (Marque una)", options: [
+      o("ninguna", "Ninguna, no se lleva control"), o("cuaderno", "Cuaderno o libreta"),
+      o("hoja_calculo", "Hoja de cálculo, por ejemplo Excel", "1"), o("programa", "Programa o aplicación de inventario o de punto de venta", "1"),
+      o("otra", "Otra:", "O"), o("no_se", "No sé", "N")] },
+    { code: "p5", num: 5, kind: "single", block: 2, prompt: "En los últimos tres meses, ¿qué tan seguido se anotaron las entradas y salidas de mercancía en el momento en que ocurrieron? (Marque una)", options: [
+      o("siempre", "Siempre", "1"), o("casi_siempre", "Casi siempre", "1"), o("a_veces", "A veces"),
+      o("casi_nunca", "Casi nunca"), o("nunca", "Nunca"), o("no_se", "No sé", "N")] },
+    { code: "p6", num: 6, kind: "single", block: 2, prompt: "¿Cada cuánto se cuenta físicamente la mercancía para comprobar que coincide con los registros? (Marque una)", options: [
+      o("semanal", "Cada semana o más seguido", "1"), o("mensual", "Cada mes", "1"), o("2_3_meses", "Cada dos o tres meses"),
+      o("6_12_meses", "Cada seis meses o una vez al año"), o("no_se_hace", "No se hace"), o("no_se", "No sé", "N")] },
+    { code: "p7", num: 7, kind: "single", block: 2, prompt: "¿Cómo se decide principalmente cuánta mercancía comprar? (Marque una)", options: [
+      o("ventas", "Según las ventas registradas", "1"), o("min_max", "Según cantidades mínimas y máximas definidas para cada producto", "1"),
+      o("experiencia", "Por experiencia o a simple vista"), o("se_termina", "Hasta que el producto se termina"),
+      o("promociones", "Según promociones u ofertas del proveedor"), o("otro", "Otro:", "O"), o("no_se", "No sé", "N")] },
+    { code: "p8", num: 8, kind: "single", block: 2, prompt: "¿El negocio tiene pasos establecidos para registrar las entradas, las salidas y las pérdidas de mercancía? (Marque una)", options: [
+      o("escrito", "Sí, están por escrito", "1"), o("palabra", "Sí, pero solo se acordaron de palabra", "1"),
+      o("no_hay", "No hay pasos establecidos"), o("no_se", "No sé", "N")] },
+    { code: "p9", num: 9, kind: "single", block: 2, prompt: "¿Las personas que manejan el inventario han recibido capacitación sobre cómo registrar o controlar la mercancía? (Marque una)", options: [
+      o("todas", "Sí, todas", "1"), o("algunas", "Sí, solo algunas", "1"),
+      o("ninguna", "Ninguna ha recibido capacitación"), o("no_se", "No sé", "N")] },
+    { code: "p10", num: 10, kind: "single", block: 3, prompt: "En los últimos tres meses, ¿cuántas veces no se pudo vender un producto porque ya no había existencias? (Marque una)", options: [
+      o("ninguna", "Ninguna vez"), o("1_2", "De 1 a 2 veces"), o("3_5", "De 3 a 5 veces"),
+      o("mas_5", "Más de 5 veces"), o("no_se", "No sé", "N")] },
+    { code: "p11", num: 11, kind: "single", block: 3, prompt: "En los últimos tres meses, ¿hubo productos que se quedaron sin vender porque se compró más de lo necesario? (Marque una)", options: [
+      o("no", "No"), o("pocos", "Sí, en pocos productos"), o("varios", "Sí, en varios productos"), o("no_se", "No sé", "N")] },
+    { code: "p12", num: 12, kind: "multi", block: 3, prompt: "En los últimos tres meses, ¿qué tipos de pérdida de mercancía tuvo el negocio? (Puede marcar varias)", options: [
+      o("danados", "Productos dañados"), o("caducados", "Productos caducados o vencidos"),
+      o("extraviados", "Productos extraviados o que faltaron sin saber por qué"), o("robados", "Productos robados"),
+      o("ninguna", "Ninguna pérdida", "X"), o("no_se", "No sé", "XN")] },
+    { code: "p13", num: 13, kind: "single", block: 4, emphasis: "ventas", prompt: "Comparando los últimos tres meses con los tres meses anteriores, ¿cómo cambiaron las ventas (el dinero total que entró por vender)? (Marque una)", options: [
+      o("aumentaron", "Aumentaron"), o("igual", "Se mantuvieron igual"), o("disminuyeron", "Disminuyeron"), o("no_se", "No sé", "N")] },
+    { code: "p14", num: 14, kind: "single", block: 4, emphasis: "ganancias", prompt: "Comparando los últimos tres meses con los tres meses anteriores, ¿cómo cambiaron las ganancias (lo que queda después de pagar la mercancía y los demás gastos)? (Marque una)", options: [
+      o("aumentaron", "Aumentaron"), o("igual", "Se mantuvieron igual"), o("disminuyeron", "Disminuyeron"), o("no_se", "No sé", "N")] },
+    { code: "p15", num: 15, kind: "single", block: 4, prompt: "En los últimos tres meses, aproximadamente, ¿qué parte de las ventas representó el valor de la mercancía perdida (dañada, caducada, extraviada o robada)? (Marque una)", options: [
+      o("no_hubo", "No hubo pérdidas"), o("menos_1", "Menos del 1 %"), o("1_5", "Del 1 % al 5 %"),
+      o("mas_5", "Más del 5 %"), o("no_se", "No sé", "N")] }
+  ]
+};
+const Q = {};
+INSTRUMENT.questions.forEach(function (q) { Q[q.code] = q; });
+function optLabel(qc, code) {
+  const q = Q[qc]; if (!q) return code;
+  const op = q.options.find(function (x) { return x.code === code; });
+  return op ? op.label : code;
+}
+const CLASS_LABELS = { pyme: "PYME", micro: "Microempresa", fuera_alcance: "Fuera de alcance", por_revisar: "Por revisar" };
+const LEVEL_LABELS = { bajo: "Bajo (0–2)", medio: "Medio (3–4)", alto: "Alto (5–6)" };
+
+/* Huella del instrumento: misma cadena que encuesta.instrument_hash() */
+function instrumentString() {
+  let s = "";
+  INSTRUMENT.questions.slice().sort(function (a, b) { return a.num - b.num; }).forEach(function (q) {
+    s += q.num + "|" + q.code + "|" + q.kind + "|" + q.prompt + "\n";
+    q.options.forEach(function (op) {
+      s += op.code + "|" + op.label + "|" + (op.other ? "1" : "0") + "|" + (op.exclusive ? "1" : "0") + "\n";
+    });
+  });
+  return s;
+}
+async function sha256hex(text) {
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf), function (b) { return b.toString(16).padStart(2, "0"); }).join("");
+}
+
+/* Reglas derivadas (el servidor las recalcula; aquí solo para modo demo y vista) */
+function classify(giro, tam) {
+  if (tam === "1_10") return "micro";
+  if (tam === "mas_250") return "fuera_alcance";
+  if (giro === "otro") return "por_revisar";
+  if ((giro === "comercio" || giro === "servicios") && ["11_30", "31_50", "51_100"].includes(tam)) return "pyme";
+  if ((giro === "comercio" || giro === "servicios") && tam === "101_250") return "fuera_alcance";
+  if (giro === "industria" && ["11_30", "31_50", "51_100", "101_250"].includes(tam)) return "pyme";
+  return "por_revisar";
+}
+function scoreOf(ans) {
+  let score = 0, nosabe = 0;
+  ["p4", "p5", "p6", "p7", "p8", "p9"].forEach(function (qc) {
+    const op = Q[qc].options.find(function (x) { return x.code === ans[qc]; });
+    if (op) { score += op.points; if (op.nosabe) nosabe++; }
+  });
+  return { score: score, level: score >= 5 ? "alto" : score >= 3 ? "medio" : "bajo", nosabe: nosabe };
+}
+
+/* ---------- Utilidades de DOM seguras (sin innerHTML con datos) ---------- */
+function el(tag, attrs) {
+  const node = document.createElement(tag);
+  if (attrs) {
+    Object.keys(attrs).forEach(function (k) {
+      const v = attrs[k];
+      if (v === null || v === undefined || v === false) return;
+      if (k === "class") node.className = v;
+      else if (k === "text") node.textContent = v;
+      else if (k.startsWith("on") && typeof v === "function") node.addEventListener(k.slice(2), v);
+      else if (k === "dataset") Object.keys(v).forEach(function (d) { node.dataset[d] = v[d]; });
+      else if (v === true) node.setAttribute(k, "");
+      else node.setAttribute(k, String(v));
+    });
+  }
+  for (let i = 2; i < arguments.length; i++) append(node, arguments[i]);
+  return node;
+}
+function append(node, child) {
+  if (child === null || child === undefined || child === false) return;
+  if (Array.isArray(child)) { child.forEach(function (c) { append(node, c); }); return; }
+  node.appendChild(typeof child === "string" || typeof child === "number" ? document.createTextNode(String(child)) : child);
+}
+function clear(node) { while (node.firstChild) node.removeChild(node.firstChild); }
+function announce(msg) { const l = document.getElementById("live"); l.textContent = ""; setTimeout(function () { l.textContent = msg; }, 30); }
+function uuidv4() {
+  if (crypto.randomUUID) return crypto.randomUUID();
+  const b = crypto.getRandomValues(new Uint8Array(16));
+  b[6] = (b[6] & 0x0f) | 0x40; b[8] = (b[8] & 0x3f) | 0x80;
+  const h = Array.from(b, function (x) { return x.toString(16).padStart(2, "0"); }).join("");
+  return h.slice(0, 8) + "-" + h.slice(8, 12) + "-" + h.slice(12, 16) + "-" + h.slice(16, 20) + "-" + h.slice(20);
+}
+const fmtDateTime = new Intl.DateTimeFormat("es-MX", { dateStyle: "medium", timeStyle: "short" });
+const fmtDate = new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" });
+const fmtTime = new Intl.DateTimeFormat("es-MX", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+function pct(n, d) { return d > 0 ? (100 * n / d) : null; }
+function pctText(n, d) { const p = pct(n, d); return p === null ? "—" : p.toFixed(1).replace(/\.0$/, "") + " %"; }
+function localDay(iso) { const d = new Date(iso); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+
+/* Almacenamiento de sesión con protección (puede fallar en modo privado) */
+const store = {
+  get: function (k) { try { const v = sessionStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } },
+  set: function (k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); return true; } catch (e) { return false; } },
+  del: function (k) { try { sessionStorage.removeItem(k); } catch (e) { /* nada */ } }
+};
+
+/* Validación de nombre y edad (misma regla que la Edge Function) */
+const NAME_RE = /^\p{L}[\p{L}\p{M} '’.\-]*$/u;
+function normName(v) { return String(v || "").normalize("NFC").replace(/\s+/g, " ").trim(); }
+function nameError(v, what) {
+  const t = normName(v);
+  if (!t) return "Escriba su " + what + ".";
+  if (t.length > 80) return "Use como máximo 80 caracteres.";
+  if (!NAME_RE.test(t)) return "Use solo letras (con acentos o ñ), espacios, apóstrofo ('), guion (-) o punto.";
+  return "";
+}
+const AGE_MIN = 10, AGE_MAX = 110; // rango técnico para evitar errores de captura (no es requisito de participación)
+function ageError(v) {
+  const t = String(v || "").trim();
+  if (!t) return "Escriba su edad en años cumplidos.";
+  if (!/^\d{1,3}$/.test(t)) return "Escriba la edad solo con números enteros, sin puntos ni letras.";
+  const n = Number(t);
+  if (n < AGE_MIN || n > AGE_MAX) return "Revise la edad: debe estar entre " + AGE_MIN + " y " + AGE_MAX + " años.";
+  return "";
+}
+
+/* Carga de bibliotecas externas con SRI */
+const libPromises = {};
+function loadLib(name) {
+  if (libPromises[name]) return libPromises[name];
+  libPromises[name] = new Promise(function (resolve, reject) {
+    const s = document.createElement("script");
+    s.src = LIBS[name].src; s.integrity = LIBS[name].integrity; s.crossOrigin = "anonymous"; s.referrerPolicy = "no-referrer";
+    s.onload = function () { resolve(); };
+    s.onerror = function () { libPromises[name] = null; reject(new Error("No se pudo cargar " + name)); };
+    document.head.appendChild(s);
+  });
+  return libPromises[name];
+}
+
+/* ---------- Modo de ejecución ---------- */
+const params = new URLSearchParams(location.search);
+const DEMO = params.get("modo") === "demo";
+function configured() { return /^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(CONFIG.SUPABASE_URL) && /^(sb_publishable_|eyJ)/.test(CONFIG.SUPABASE_PUBLISHABLE_KEY); }
+function functionUrl() { return CONFIG.SUPABASE_URL.replace(/\/+$/, "") + "/functions/v1/" + encodeURIComponent(CONFIG.FUNCTION_NAME); }
+
+/* =====================================================================
+   CONEXIÓN REAL (Edge Function para el cuestionario; supabase-js para el panel)
+   ===================================================================== */
+async function fetchWithTimeout(url, opts, ms) {
+  const ctrl = new AbortController();
+  const t = setTimeout(function () { ctrl.abort(); }, ms || 20000);
+  try { return await fetch(url, Object.assign({}, opts, { signal: ctrl.signal, credentials: "omit", cache: "no-store" })); }
+  finally { clearTimeout(t); }
+}
+
+const RealSurveyApi = {
+  status: async function () {
+    let r;
+    try { r = await fetchWithTimeout(functionUrl(), { method: "GET" }, 15000); }
+    catch (e) { return { kind: "network" }; }
+    let d = null; try { d = await r.json(); } catch (e) { d = null; }
+    if (r.status === 403 && d && d.status === "forbidden_origin") return { kind: "origin" };
+    if (!r.ok || !d || d.status !== "ok") return { kind: "server", http: r.status };
+    return { kind: "ok", open: !!d.open, instrument_hash: d.instrument_hash, instrument_version: d.instrument_version,
+             consent_version: d.consent_version, survey_id: d.survey_id };
+  },
+  submit: async function (payload) {
+    let r;
+    try {
+      r = await fetchWithTimeout(functionUrl(), {
+        method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+      }, 25000);
+    } catch (e) { return { kind: "uncertain" }; }
+    let d = null; try { d = await r.json(); } catch (e) { d = null; }
+    const st = d && d.status;
+    if ((r.status === 201 && st === "ok") || (r.status === 200 && st === "duplicate")) return { kind: st, folio: d.folio, received_at: d.received_at };
+    if (r.status === 422 || r.status === 400 || r.status === 413 || r.status === 415) return { kind: "invalid", errors: (d && d.errors) || [] };
+    if (r.status === 403 && st === "closed") return { kind: "closed" };
+    if (r.status === 403 && st === "forbidden_origin") return { kind: "origin" };
+    if (r.status === 409) return { kind: "conflict" };
+    if (r.status === 429) return { kind: "rate_limited", retry_after: Number((d && d.retry_after) || r.headers.get("Retry-After") || 60) };
+    return { kind: "uncertain", http: r.status };
+  }
+};
+
+let sbClient = null;
+const AUTH_STORAGE_KEY = "enc-admin-auth";
+async function getSb() {
+  if (sbClient) return sbClient;
+  await loadLib("supabase");
+  if (!window.supabase || !window.supabase.createClient) throw new Error("supabase-js no disponible");
+  sbClient = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_PUBLISHABLE_KEY, {
+    auth: { storage: window.sessionStorage, storageKey: AUTH_STORAGE_KEY, persistSession: true,
+            autoRefreshToken: true, detectSessionInUrl: false }
+  });
+  return sbClient;
+}
+function rpcError(error) {
+  const e = new Error(error.message || "Error del servidor");
+  e.code = error.code; e.unauthorized = error.code === "42501";
+  return e;
+}
+async function rpc(name, args) {
+  const sb = await getSb();
+  const res = await sb.rpc(name, args || {});
+  if (res.error) throw rpcError(res.error);
+  return res.data;
+}
+const RealAdminApi = {
+  label: "real",
+  session: async function () { const sb = await getSb(); const s = await sb.auth.getSession(); return s.data && s.data.session; },
+  signIn: async function (email, password) {
+    const sb = await getSb();
+    const r = await sb.auth.signInWithPassword({ email: email, password: password });
+    if (r.error) throw r.error;
+    return r.data;
+  },
+  signOut: async function () {
+    try { if (sbClient) await sbClient.auth.signOut({ scope: "local" }); } catch (e) { /* se limpia igual */ }
+    store.del(AUTH_STORAGE_KEY);
+    try { Object.keys(sessionStorage).forEach(function (k) { if (k.indexOf("sb-") === 0) sessionStorage.removeItem(k); }); } catch (e) { /* nada */ }
+  },
+  whoami: function () { return rpc("enc_admin_whoami"); },
+  getConfig: function () { return rpc("enc_admin_get_config"); },
+  setOpen: function (v) { return rpc("enc_admin_set_open", { p_open: v }); },
+  list: function (limit, offset) { return rpc("enc_admin_list", { p_limit: limit, p_offset: offset }); },
+  history: function (id) { return rpc("enc_admin_history", { p_id: id }); },
+  setExclusion: function (id, ex, reason) { return rpc("enc_admin_set_exclusion", { p_id: id, p_excluded: ex, p_reason: reason }); },
+  setClassification: function (id, c, reason) { return rpc("enc_admin_set_classification", { p_id: id, p_classification: c, p_reason: reason }); },
+  getIdentity: function (id) { return rpc("enc_admin_get_identity", { p_id: id }); },
+  exportIdentities: function () { return rpc("enc_admin_export_identities"); }
+};
+
+/* =====================================================================
+   MODO DEMOSTRACIÓN (?modo=demo)
+   Separado por completo: no crea cliente de Supabase ni hace solicitudes de
+   red. Los datos son ficticios y viven solo en la memoria de esta pestaña.
+   Reproduce las reglas del servidor para poder probar la interfaz.
+   ===================================================================== */
+const DemoDB = { open: true, rows: [], people: {}, keys: {}, excl: [], over: [], failNext: null };
+function demoDelay(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+function demoValidate(p) {
+  const errs = [];
+  if (!p || typeof p !== "object") return ["payload"];
+  if (p.instrument_version !== INSTRUMENT.instrument_version) errs.push("instrument_version");
+  if (!p.consent || p.consent.given !== true || p.consent.version !== INSTRUMENT.consent_version) errs.push("consent");
+  const pa = p.participant || {};
+  if (nameError(pa.nombres, "nombre")) errs.push("nombres");
+  if (nameError(pa.apellidos, "apellidos")) errs.push("apellidos");
+  if (typeof pa.edad !== "number" || ageError(String(pa.edad))) errs.push("edad");
+  const a = p.answers || {};
+  INSTRUMENT.questions.forEach(function (q) {
+    if (q.kind === "single") {
+      const op = q.options.find(function (x) { return x.code === a[q.code]; });
+      if (!op) { errs.push(q.code); return; }
+      const hasOther = q.options.some(function (x) { return x.other; });
+      if (hasOther) {
+        const t = a[q.code + "_otro"];
+        if (op.other && (typeof t !== "string" || !normName(t) || normName(t).length > 120)) errs.push(q.code + "_otro");
+        if (!op.other && t !== undefined && t !== null) errs.push(q.code + "_otro_sin_opcion");
+      }
+    } else {
+      const arr = a[q.code];
+      if (!Array.isArray(arr) || !arr.length) { errs.push(q.code); return; }
+      if (new Set(arr).size !== arr.length) errs.push(q.code + "_repetida");
+      if (arr.some(function (c) { return !q.options.some(function (x) { return x.code === c; }); })) errs.push(q.code);
+      const ex = arr.filter(function (c) { return q.options.find(function (x) { return x.code === c && x.exclusive; }); });
+      if (ex.length && arr.length > 1) errs.push(q.code + "_combinacion");
+    }
+  });
+  return errs;
+}
+function demoInsert(p, key, hash, when) {
+  const a = p.answers, s = scoreOf(a);
+  const id = uuidv4();
+  const folio = "INV-" + id.replace(/-/g, "").slice(0, 8).toUpperCase();
+  const row = {
+    id: id, folio: folio, received_at: (when || new Date()).toISOString(), survey_id: INSTRUMENT.survey_id,
+    instrument_version: INSTRUMENT.instrument_version, consent_version: INSTRUMENT.consent_version,
+    p1: a.p1, p1_otro: a.p1_otro || null, p2: a.p2, p2_otro: a.p2_otro || null, p3: a.p3,
+    p4: a.p4, p4_otro: a.p4_otro || null, p5: a.p5, p6: a.p6, p7: a.p7, p7_otro: a.p7_otro || null,
+    p8: a.p8, p9: a.p9, p10: a.p10, p11: a.p11, p13: a.p13, p14: a.p14, p15: a.p15,
+    p12: Q.p12.options.map(function (x) { return x.code; }).filter(function (c) { return a.p12.includes(c); }),
+    auto_classification: classify(a.p1, a.p3), classification: classify(a.p1, a.p3), classification_manual: false,
+    control_score: s.score, control_level: s.level, nosabe_p4_p9: s.nosabe, excluded: false, exclusion_reason: null
+  };
+  DemoDB.rows.push(row);
+  DemoDB.people[id] = { nombres: normName(p.participant.nombres), apellidos: normName(p.participant.apellidos), edad: p.participant.edad };
+  DemoDB.keys[key] = { hash: hash, id: id };
+  return row;
+}
+const DemoSurveyApi = {
+  status: async function () {
+    await demoDelay(150);
+    return { kind: "ok", open: DemoDB.open, instrument_hash: await sha256hex(instrumentString()),
+             instrument_version: INSTRUMENT.instrument_version, consent_version: INSTRUMENT.consent_version };
+  },
+  submit: async function (p) {
+    await demoDelay(500);
+    const errs = demoValidate(p);
+    if (errs.length) return { kind: "invalid", errors: errs };
+    const norm = JSON.stringify({ participant: p.participant, answers: p.answers });
+    const hash = await sha256hex(norm);
+    const prev = DemoDB.keys[p.idempotency_key];
+    let result;
+    if (prev) {
+      if (prev.hash !== hash) return { kind: "conflict" };
+      const row = DemoDB.rows.find(function (r) { return r.id === prev.id; });
+      result = { kind: "duplicate", folio: row.folio, received_at: row.received_at };
+    } else {
+      if (!DemoDB.open) return { kind: "closed" };
+      const row = demoInsert(p, p.idempotency_key, hash);
+      result = { kind: "ok", folio: row.folio, received_at: row.received_at };
+    }
+    // Simulación de fallas para probar reintentos (se activa desde el panel demo)
+    if (DemoDB.failNext === "before") { DemoDB.failNext = null; if (result.kind === "ok") { const id = DemoDB.keys[p.idempotency_key].id; DemoDB.rows = DemoDB.rows.filter(function (r) { return r.id !== id; }); delete DemoDB.keys[p.idempotency_key]; delete DemoDB.people[id]; } return { kind: "uncertain" }; }
+    if (DemoDB.failNext === "after") { DemoDB.failNext = null; return { kind: "uncertain" }; }
+    return result;
+  }
+};
+function demoRowsView() {
+  return DemoDB.rows.map(function (r) {
+    const lastEx = DemoDB.excl.filter(function (e) { return e.response_id === r.id; }).slice(-1)[0];
+    const lastOv = DemoDB.over.filter(function (e) { return e.response_id === r.id; }).slice(-1)[0];
+    return Object.assign({}, r, {
+      excluded: lastEx ? lastEx.excluded : false, exclusion_reason: lastEx ? lastEx.reason : null,
+      classification: lastOv ? lastOv.classification : r.auto_classification, classification_manual: !!lastOv
+    });
+  }).sort(function (a, b) { return a.received_at < b.received_at ? -1 : a.received_at > b.received_at ? 1 : (a.id < b.id ? -1 : 1); });
+}
+const DemoAdminApi = {
+  label: "demo",
+  session: async function () { return { demo: true }; },
+  signIn: async function () { return {}; },
+  signOut: async function () { /* nada que limpiar en el servidor */ },
+  whoami: async function () { return { is_admin: true, user_id: "demo" }; },
+  getConfig: async function () {
+    await demoDelay(120);
+    return { is_open: DemoDB.open, survey_id: INSTRUMENT.survey_id, instrument_version: INSTRUMENT.instrument_version,
+             consent_version: INSTRUMENT.consent_version, instrument_hash: await sha256hex(instrumentString()),
+             total_responses: DemoDB.rows.length, server_time: new Date().toISOString() };
+  },
+  setOpen: async function (v) { DemoDB.open = !!v; return { is_open: DemoDB.open }; },
+  list: async function (limit, offset) { await demoDelay(80); return demoRowsView().slice(offset, offset + limit); },
+  history: async function (id) {
+    return { exclusions: DemoDB.excl.filter(function (e) { return e.response_id === id; }),
+             classifications: DemoDB.over.filter(function (e) { return e.response_id === id; }) };
+  },
+  setExclusion: async function (id, ex, reason) {
+    if (!reason || reason.trim().length < 3) { const e = new Error("Indica un motivo de 3 a 500 caracteres"); throw e; }
+    DemoDB.excl.push({ response_id: id, excluded: ex, reason: reason.trim(), created_at: new Date().toISOString(), created_by: "demo" });
+    return { ok: true };
+  },
+  setClassification: async function (id, c, reason) {
+    if (!reason || reason.trim().length < 3) { const e = new Error("Indica un motivo de 3 a 500 caracteres"); throw e; }
+    DemoDB.over.push({ response_id: id, classification: c, reason: reason.trim(), created_at: new Date().toISOString(), created_by: "demo" });
+    return { ok: true };
+  },
+  getIdentity: async function (id) { return DemoDB.people[id] || null; },
+  exportIdentities: async function () {
+    return demoRowsView().map(function (r) { const p = DemoDB.people[r.id] || {}; return { id: r.id, folio: r.folio, received_at: r.received_at, nombres: p.nombres, apellidos: p.apellidos, edad: p.edad }; });
+  }
+};
+/* Genera respuestas FICTICIAS solo en modo demo (nunca en producción) */
+function demoSeed(n) {
+  let seed = 20261017 + DemoDB.rows.length;
+  function rnd() { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; }
+  function pick(qc, weights) {
+    const ops = Q[qc].options; const w = weights || ops.map(function () { return 1; });
+    const tot = w.reduce(function (a, b) { return a + b; }, 0); let x = rnd() * tot;
+    for (let i = 0; i < ops.length; i++) { x -= w[i]; if (x <= 0) return ops[i].code; }
+    return ops[ops.length - 1].code;
+  }
+  const fict = ["Ana", "Luis", "María José", "Juan Pablo", "Sofía", "Diego", "Valeria", "Óscar"];
+  for (let i = 0; i < n; i++) {
+    const a = {
+      p1: pick("p1", [5, 3, 3, 1]), p2: pick("p2", [5, 3, 2, 1]), p3: pick("p3", [3, 5, 3, 2, 1, 1]),
+      p4: pick("p4", [2, 4, 4, 3, 1, 1]), p5: pick("p5", [3, 3, 3, 1, 1, 1]), p6: pick("p6", [2, 4, 3, 2, 1, 1]),
+      p7: pick("p7", [4, 2, 4, 2, 1, 1, 1]), p8: pick("p8", [2, 4, 3, 1]), p9: pick("p9", [2, 4, 3, 1]),
+      p10: pick("p10", [3, 4, 2, 1, 1]), p11: pick("p11", [3, 4, 2, 1]), p13: pick("p13", [4, 3, 2, 1]),
+      p14: pick("p14", [3, 3, 3, 1]), p15: pick("p15", [2, 3, 3, 1, 2])
+    };
+    if (a.p1 === "otro") a.p1_otro = "Giro ficticio " + (i + 1);
+    if (a.p2 === "otro") a.p2_otro = "Puesto ficticio";
+    if (a.p4 === "otra") a.p4_otro = "Herramienta ficticia";
+    if (a.p7 === "otro") a.p7_otro = "Criterio ficticio";
+    const r = rnd();
+    if (r < 0.15) a.p12 = ["ninguna"]; else if (r < 0.22) a.p12 = ["no_se"];
+    else { a.p12 = ["danados", "caducados", "extraviados", "robados"].filter(function () { return rnd() < 0.45; }); if (!a.p12.length) a.p12 = ["danados"]; }
+    const when = new Date(Date.now() - Math.floor(rnd() * 20 * 86400000));
+    demoInsert({ answers: a, participant: { nombres: fict[i % fict.length] + " Ficticio", apellidos: "Prueba Ficticia", edad: 20 + Math.floor(rnd() * 45) } },
+      uuidv4(), "seed", when);
+  }
+}
+
+/* =====================================================================
+   CUESTIONARIO
+   ===================================================================== */
+const SurveyApi = DEMO ? DemoSurveyApi : RealSurveyApi;
+const DRAFT_KEY = "enc-borrador-v1";
+const STEP_NAMES = ["Inicio", "Datos y aviso", "Sobre el negocio", "Inventario", "Problemas y pérdidas", "Resultados", "Revisión", "Envío", "Confirmación"];
+const OTHER_QS = ["p1", "p2", "p4", "p7"];
+
+function freshState() {
+  return { step: 0, participant: { nombres: "", apellidos: "", edad: "" }, consent: false,
+           answers: { p12: [] }, otherText: { p1: "", p2: "", p4: "", p7: "" },
+           key: null, pendingUncertain: false, returnToReview: false, outcome: null, result: null };
+}
+let S = freshState();
+let serverStatus = { kind: "loading" };
+let localHash = null;
+let sending = false;
+
+function saveDraft() {
+  if (!S.consent || S.step >= 8) return; // nada identificable se guarda antes del consentimiento
+  store.set(DRAFT_KEY, { v: 1, step: Math.min(S.step, 6), participant: S.participant, consent: S.consent, answers: S.answers,
+                         otherText: S.otherText, key: S.key, pendingUncertain: S.pendingUncertain });
+}
+function loadDraft() {
+  const d = store.get(DRAFT_KEY);
+  if (!d || d.v !== 1 || !d.consent) return null;
+  return d;
+}
+function discardDraft() { store.del(DRAFT_KEY); }
+
+function payloadFromState() {
+  const a = {};
+  INSTRUMENT.questions.forEach(function (q) {
+    if (q.kind === "single") a[q.code] = S.answers[q.code];
+    else a[q.code] = q.options.map(function (x) { return x.code; }).filter(function (c) { return (S.answers.p12 || []).includes(c); });
+  });
+  OTHER_QS.forEach(function (qc) {
+    const op = Q[qc].options.find(function (x) { return x.code === S.answers[qc]; });
+    if (op && op.other) a[qc + "_otro"] = normName(S.otherText[qc]);
+  });
+  return {
+    idempotency_key: S.key,
+    instrument_version: INSTRUMENT.instrument_version,
+    consent: { given: true, version: INSTRUMENT.consent_version },
+    participant: { nombres: normName(S.participant.nombres), apellidos: normName(S.participant.apellidos), edad: Number(String(S.participant.edad).trim()) },
+    answers: a
+  };
+}
+function answeredCount() {
+  return INSTRUMENT.questions.filter(function (q) { return questionError(q) === ""; }).length;
+}
+function questionError(q) {
+  const v = S.answers[q.code];
+  if (q.kind === "multi") return (v && v.length) ? "" : "Marque al menos una opción.";
+  if (!v) return "Elija una opción para continuar.";
+  const op = q.options.find(function (x) { return x.code === v; });
+  if (op && op.other) {
+    const t = normName(S.otherText[q.code]);
+    if (!t) return "Escriba cuál es (campo \"" + op.label.replace(":", "") + "\").";
+    if (t.length > 120) return "Use como máximo 120 caracteres.";
+  }
+  return "";
+}
+
+/* ---------- Encabezado de progreso ---------- */
+function progressHeader() {
+  const visible = Math.min(S.step, 6);
+  const wrap = el("div", { class: "progress" });
+  const pctDone = Math.round(100 * answeredCount() / 15);
+  wrap.appendChild(el("div", { class: "meta" },
+    el("span", { text: "Paso " + visible + " de 6 · " + STEP_NAMES[S.step] }),
+    el("span", { text: answeredCount() + " de 15 preguntas respondidas" })));
+  const bar = el("div", { class: "bar", role: "progressbar", "aria-label": "Avance del cuestionario", "aria-valuemin": "0", "aria-valuemax": "15", "aria-valuenow": String(answeredCount()) });
+  bar.appendChild(el("span", { style: "width:" + pctDone + "%" }));
+  wrap.appendChild(bar);
+  const ol = el("ol", { class: "steps", "aria-label": "Pasos" });
+  for (let i = 1; i <= 6; i++) {
+    ol.appendChild(el("li", { class: i < visible ? "done" : i === visible ? "current" : "", "aria-current": i === visible ? "step" : null, text: STEP_NAMES[i] }));
+  }
+  wrap.appendChild(ol);
+  return wrap;
+}
+
+function exitLink() {
+  return el("button", { type: "button", class: "linkbtn", onclick: confirmDiscard, text: "Salir y borrar mis respuestas" });
+}
+function confirmDiscard() {
+  openDialog("¿Salir y borrar?", function (body) {
+    append(body, el("p", { text: S.pendingUncertain
+      ? "Su último envío no se pudo confirmar: es posible que ya se haya guardado. Si sale ahora, se borrará lo que hay en este dispositivo, pero no lo que ya llegó al servidor."
+      : "Se borrarán de este dispositivo los datos y respuestas que lleva. No se envía nada." }));
+    append(body, el("div", { class: "actions" },
+      el("button", { type: "button", class: "btn danger", onclick: function () { closeDialog(); resetSurvey(); announce("Se borraron sus respuestas de este dispositivo."); }, text: "Sí, borrar y salir" }),
+      el("button", { type: "button", class: "btn ghost", onclick: closeDialog, text: "Seguir respondiendo" })));
+  });
+}
+function resetSurvey() { discardDraft(); S = freshState(); renderSurvey(); }
+
+function goStep(n, opts) {
+  S.step = n;
+  saveDraft();
+  renderSurvey();
+  const h = document.querySelector("#app h1, #app h2");
+  if (h) { h.setAttribute("tabindex", "-1"); h.focus({ preventScroll: true }); }
+  window.scrollTo({ top: 0, behavior: "auto" });
+  if (!opts || !opts.silent) announce(STEP_NAMES[n]);
+}
+
+/* ---------- Pantallas ---------- */
+function renderSurvey() {
+  if (location.hash === "#/panel") return; // el panel tiene su propia vista
+  const app = document.getElementById("app");
+  app.className = "wrap";
+  clear(app);
+  if (S.step === 0) return renderWelcome(app);
+  if (S.step === 1) return renderIdent(app);
+  if (S.step >= 2 && S.step <= 5) return renderBlock(app, S.step - 1);
+  if (S.step === 6) return renderReview(app);
+  if (S.step === 7) return renderSend(app);
+  if (S.step === 8) return renderConfirm(app);
+}
+
+function threeMonthsText() {
+  const now = new Date();
+  const from = new Date(now); from.setMonth(from.getMonth() - 3);
+  return "Hoy es " + fmtDate.format(now) + ", así que piense aproximadamente en lo ocurrido del " + fmtDate.format(from) + " a hoy.";
+}
+
+function statusNotice() {
+  const st = serverStatus;
+  if (DEMO) return el("div", { class: "notice warn" }, el("strong", { text: "Modo demostración" }),
+    "Puede probar el cuestionario completo. Las respuestas son de prueba y solo existen en esta pestaña; no llegan a la base de datos real.");
+  if (st.kind === "config") return el("div", { class: "notice warn" }, el("strong", { text: "Configuración pendiente" }),
+    "Esta página todavía no está conectada a su base de datos. El investigador debe completar el bloque CONFIG (ver GUIA.md). Mientras tanto no se pueden recibir respuestas.");
+  if (st.kind === "secret") return el("div", { class: "notice danger" }, el("strong", { text: "Clave equivocada en la configuración" }),
+    "Se colocó una clave secreta en esta página. Quítela de inmediato, genere una nueva en Supabase y use solo la clave publicable (sb_publishable_...).");
+  if (st.kind === "loading") return el("div", { class: "notice", role: "status" }, el("strong", { text: "Comprobando la conexión…" }), "Un momento, por favor.");
+  if (st.kind === "network" || st.kind === "server") return el("div", { class: "notice danger", role: "alert" },
+    el("strong", { text: "No se pudo conectar con el servidor" }),
+    "Revise su conexión a internet e intente de nuevo. Sin conexión no es posible guardar respuestas.",
+    el("div", { class: "actions" }, el("button", { type: "button", class: "btn secondary small", onclick: checkStatus, text: "Reintentar conexión" })));
+  if (st.kind === "origin") return el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "Dirección no autorizada" }),
+    "El servidor no reconoce esta dirección web. El investigador debe agregarla en ALLOWED_ORIGINS (ver GUIA.md).");
+  if (st.kind === "ok" && st.mismatch) return el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "Versión del cuestionario desalineada" }),
+    "Las preguntas de esta página no coinciden con las del servidor, por eso el envío está bloqueado. El investigador debe revisar que index.html y schema.sql sean de la misma versión.");
+  if (st.kind === "ok" && !st.open) return el("div", { class: "notice warn" }, el("strong", { text: "La encuesta no está recibiendo respuestas en este momento" }),
+    "Gracias por su interés. Vuelva a intentarlo más tarde o consulte al investigador.");
+  return null;
+}
+function canStart() { return DEMO || (serverStatus.kind === "ok" && serverStatus.open && !serverStatus.mismatch); }
+
+function renderWelcome(app) {
+  const card = el("section", { class: "card hero", "aria-labelledby": "t-welcome" });
+  append(card, [
+    el("div", { class: "kicker", text: "Investigación escolar" + (CONFIG.INSTITUCION ? " · " + CONFIG.INSTITUCION : "") }),
+    el("h1", { id: "t-welcome", text: INSTRUMENT.title }),
+    el("p", {}, el("strong", { text: "Objetivo: " }), "conocer cómo administran su inventario las PYMES y qué resultados económicos han tenido en los últimos tres meses, para analizar si existe relación entre ambos aspectos."),
+    el("p", {}, el("strong", { text: "Población a la que se dirige: " }), "dueños, administradores o encargados de pequeñas y medianas empresas (PYMES) que vendan o fabriquen productos, y que conozcan tanto el manejo del inventario como los resultados económicos del negocio. Se consideran PYMES las empresas pequeñas y medianas según su número de trabajadores: de 11 a 100 en comercio y servicios, y de 11 a 250 en industria."),
+    el("div", { class: "facts" },
+      el("div", { class: "fact" }, el("b", { text: "5 a 7 minutos" }), el("span", { class: "muted small", text: "Tiempo aproximado; es solo una guía." })),
+      el("div", { class: "fact" }, el("b", { text: "15 preguntas" }), el("span", { class: "muted small", text: "En 4 partes cortas, más sus datos." })),
+      el("div", { class: "fact" }, el("b", { text: "Confidencial" }), el("span", { class: "muted small", text: "No es anónima: se piden nombre y edad." })))
+  ]);
+  app.appendChild(card);
+
+  const ins = el("section", { class: "card", "aria-labelledby": "t-ins" },
+    el("h2", { id: "t-ins", text: "Instrucciones" }),
+    el("ol", { class: "clean" },
+      el("li", { text: "Lea cada pregunta y elija la opción que mejor describa su negocio." }),
+      el("li", { text: "Marque solo una opción, excepto donde se indique que puede marcar varias." }),
+      el("li", {}, "Cuando una pregunta diga \"los últimos tres meses\", piense en los tres meses anteriores a la fecha en que responde. ", el("span", { class: "muted", text: threeMonthsText() })),
+      el("li", { text: "Si no conoce la respuesta, marque \"No sé\". No hay respuestas correctas o incorrectas." }),
+      el("li", { text: "Responder la encuesta toma entre 5 y 7 minutos." })),
+    el("p", { class: "muted small", text: "Se espera una sola respuesta por negocio. Si otra persona de su negocio ya contestó, no es necesario responder de nuevo." }));
+  app.appendChild(ins);
+
+  const sn = statusNotice(); if (sn) app.appendChild(sn);
+
+  const draft = loadDraft();
+  const actions = el("div", { class: "actions" });
+  if (draft) {
+    app.appendChild(el("div", { class: "notice ok" }, el("strong", { text: "Tiene una respuesta sin terminar en esta pestaña" }), "Puede continuar donde se quedó o borrarla y empezar de nuevo."));
+    append(actions, [
+      el("button", { type: "button", class: "btn primary", disabled: !canStart(), onclick: function () {
+        S = Object.assign(freshState(), { participant: draft.participant, consent: true, answers: draft.answers || { p12: [] },
+          otherText: draft.otherText || S.otherText, key: draft.key || null, pendingUncertain: !!draft.pendingUncertain });
+        goStep(draft.pendingUncertain ? 7 : (draft.step || 1));
+      }, text: "Continuar donde me quedé" }),
+      el("button", { type: "button", class: "btn ghost", onclick: function () { discardDraft(); renderSurvey(); announce("Borrador eliminado."); }, text: "Borrar y empezar de nuevo" })]);
+  } else {
+    append(actions, el("button", { type: "button", class: "btn primary", disabled: !canStart(), onclick: function () { goStep(1); }, text: "Comenzar" }));
+  }
+  app.appendChild(actions);
+}
+
+function renderIdent(app) {
+  app.appendChild(progressHeader());
+  const sec = el("section", { class: "card", "aria-labelledby": "t-ident" });
+  append(sec, el("h2", { id: "t-ident", text: "Sus datos y aviso de confidencialidad" }));
+  const resp = CONFIG.INVESTIGADOR ? "el investigador responsable (" + CONFIG.INVESTIGADOR + ")" : "el investigador responsable del estudio";
+  const aviso = el("div", { class: "notice", id: "aviso" },
+    el("strong", { text: "Aviso breve" }),
+    el("ul", { class: "clean" },
+      el("li", { text: "Su participación es voluntaria. Puede dejar de responder en cualquier momento y borrar lo que lleva con el enlace \"Salir y borrar\"." }),
+      el("li", {}, "Esta encuesta es ", el("strong", { text: "confidencial, no anónima" }), ": se piden su nombre, sus apellidos y su edad. No se pide el nombre del negocio."),
+      el("li", { text: "Las respuestas se usarán solo con fines escolares" + (CONFIG.INSTITUCION ? " (" + CONFIG.INSTITUCION + ")" : "") + "." }),
+      el("li", { text: "Solo " + resp + " puede ver sus datos de identificación, mediante una cuenta protegida. Sus datos de identificación se guardan separados de sus respuestas." }),
+      el("li", { text: "Los resultados se presentarán agrupados (conteos y porcentajes), sin nombres." }),
+      el("li", { text: "Se espera una sola respuesta por negocio." }),
+      CONFIG.CONSERVACION ? el("li", { text: "Conservación de los datos: " + CONFIG.CONSERVACION }) : null,
+      CONFIG.CONTACTO ? el("li", { text: "Dudas o solicitudes sobre sus datos: " + CONFIG.CONTACTO }) : null));
+  sec.appendChild(aviso);
+
+  const g = el("div", { class: "grid2" });
+  g.appendChild(textField("nombres", "Nombre(s)", S.participant.nombres, { autocomplete: "given-name", maxlength: "80" }, "Puede escribir nombres compuestos, con acentos o ñ."));
+  g.appendChild(textField("apellidos", "Apellidos", S.participant.apellidos, { autocomplete: "family-name", maxlength: "80" }, "Uno o dos apellidos, en el mismo campo."));
+  sec.appendChild(g);
+  sec.appendChild(textField("edad", "Edad", S.participant.edad, { inputmode: "numeric", autocomplete: "off", maxlength: "3", pattern: "[0-9]*", style: "max-width:9rem" }, "En años cumplidos, solo números."));
+
+  const cbx = el("input", { type: "checkbox", id: "consent", "aria-describedby": "aviso err-consent" });
+  cbx.checked = !!S.consent;
+  const lab = el("label", { class: "consent" + (S.consent ? " is-checked" : ""), for: "consent" }, cbx,
+    el("span", {}, el("strong", { text: "He leído el aviso y acepto participar." }), el("span", { class: "muted small", style: "display:block", text: "Es necesario marcar esta casilla para continuar." })));
+  cbx.addEventListener("change", function () {
+    S.consent = cbx.checked; lab.classList.toggle("is-checked", cbx.checked);
+    if (S.consent) saveDraft(); else discardDraft();
+    setFieldError("consent", "");
+  });
+  sec.appendChild(el("div", { class: "field" }, lab, el("div", { id: "err-consent", class: "err", hidden: true })));
+  app.appendChild(sec);
+
+  app.appendChild(el("div", { class: "actions" },
+    el("button", { type: "button", class: "btn ghost", onclick: function () { goStep(0); }, text: "Atrás" }),
+    el("span", { class: "spacer" }),
+    exitLink(),
+    el("button", { type: "button", class: "btn primary", onclick: function () {
+      const errs = [["nombres", nameError(S.participant.nombres, "nombre o nombres")], ["apellidos", nameError(S.participant.apellidos, "apellido o apellidos")],
+                    ["edad", ageError(S.participant.edad)], ["consent", S.consent ? "" : "Marque la casilla para aceptar participar."]];
+      let first = null;
+      errs.forEach(function (e) { setFieldError(e[0], e[1]); if (e[1] && !first) first = e[0]; });
+      if (first) { document.getElementById(first).focus(); announce("Revise los campos marcados."); return; }
+      S.participant.nombres = normName(S.participant.nombres); S.participant.apellidos = normName(S.participant.apellidos);
+      S.participant.edad = String(S.participant.edad).trim();
+      goStep(S.returnToReview ? 6 : 2);
+    }, text: S.returnToReview ? "Volver a la revisión" : "Siguiente" })));
+}
+function textField(id, label, value, attrs, help) {
+  const inp = el("input", Object.assign({ type: "text", id: id, name: id, "aria-describedby": "help-" + id + " err-" + id, required: true }, attrs));
+  inp.value = value || "";
+  inp.addEventListener("input", function () { S.participant[id] = inp.value; if (S.consent) saveDraft(); });
+  inp.addEventListener("blur", function () {
+    if (id !== "edad") { inp.value = normName(inp.value); S.participant[id] = inp.value; }
+    if (inp.getAttribute("aria-invalid") === "true") setFieldError(id, id === "edad" ? ageError(inp.value) : nameError(inp.value, id === "nombres" ? "nombre o nombres" : "apellido o apellidos"));
+  });
+  return el("div", { class: "field" }, el("label", { for: id, text: label }), inp,
+    el("div", { class: "help", id: "help-" + id, text: help }), el("div", { class: "err", id: "err-" + id, hidden: true }));
+}
+function setFieldError(id, msg) {
+  const e = document.getElementById("err-" + id), i = document.getElementById(id);
+  if (!e) return;
+  e.textContent = msg; e.hidden = !msg;
+  if (i) i.setAttribute("aria-invalid", msg ? "true" : "false");
+}
+
+function renderQuestion(q) {
+  const fs = el("fieldset", { class: "q", id: "fs-" + q.code, "aria-describedby": "err-" + q.code });
+  const legend = el("legend", {}, el("span", { class: "num", "aria-hidden": "true", text: String(q.num) }), el("span", { class: "sr-only", text: "Pregunta " + q.num + ". " }));
+  if (q.emphasis) {
+    const i = q.prompt.indexOf(q.emphasis);
+    append(legend, [q.prompt.slice(0, i), el("strong", { text: q.emphasis }), q.prompt.slice(i + q.emphasis.length)]);
+  } else append(legend, q.prompt);
+  fs.appendChild(legend);
+  if (q.kind === "multi") fs.appendChild(el("p", { class: "hint", text: "\"Ninguna pérdida\" y \"No sé\" no se combinan con otras opciones." }));
+  if (q.prompt.indexOf("últimos tres meses") >= 0 && q.num !== 13 && q.num !== 14) fs.appendChild(el("p", { class: "hint", text: threeMonthsText() }));
+  const box = el("div", { class: "options" });
+  q.options.forEach(function (op) {
+    const id = q.code + "-" + op.code;
+    const type = q.kind === "multi" ? "checkbox" : "radio";
+    const inp = el("input", { type: type, id: id, name: q.code, value: op.code });
+    const checked = q.kind === "multi" ? (S.answers.p12 || []).includes(op.code) : S.answers[q.code] === op.code;
+    inp.checked = checked;
+    const card = el("label", { class: "opt" + (checked ? " is-checked" : "") + (op.nosabe ? " nosabe" : ""), for: id }, inp, el("span", { class: "lbl", text: op.label }));
+    box.appendChild(card);
+    let other = null;
+    if (op.other) {
+      other = el("input", { type: "text", id: q.code + "_otro", maxlength: "120", "aria-label": "Especifique: " + op.label.replace(":", ""), placeholder: "Escriba cuál", class: "other-input" });
+      other.value = S.otherText[q.code] || "";
+      other.hidden = !checked; other.disabled = !checked;
+      other.addEventListener("input", function () { S.otherText[q.code] = other.value; saveDraft(); updateProgressOnly(); });
+      box.appendChild(other);
+    }
+    inp.addEventListener("change", function () {
+      if (q.kind === "single") {
+        S.answers[q.code] = op.code;
+        box.querySelectorAll(".opt").forEach(function (c) { c.classList.toggle("is-checked", c.querySelector("input").checked); });
+        box.querySelectorAll(".other-input").forEach(function (t) { const on = op.other; t.hidden = !on; t.disabled = !on; });
+        if (op.other && other) other.focus();
+      } else {
+        let sel = (S.answers.p12 || []).slice();
+        let msg = "";
+        if (inp.checked) {
+          if (op.exclusive) {
+            if (sel.length) msg = "Se desmarcaron las demás opciones porque \"" + op.label + "\" no se combina con otras.";
+            sel = [op.code];
+          } else {
+            const removed = sel.filter(function (c) { return Q.p12.options.find(function (x) { return x.code === c && x.exclusive; }); });
+            if (removed.length) msg = "Se desmarcó \"" + optLabel("p12", removed[0]) + "\" porque eligió un tipo de pérdida.";
+            sel = sel.filter(function (c) { return !removed.includes(c); }).concat([op.code]);
+          }
+        } else sel = sel.filter(function (c) { return c !== op.code; });
+        S.answers.p12 = sel;
+        box.querySelectorAll("input[type=checkbox]").forEach(function (c) { c.checked = sel.includes(c.value); c.closest(".opt").classList.toggle("is-checked", c.checked); });
+        const note = document.getElementById("note-p12"); if (note) note.textContent = msg;
+        if (msg) announce(msg);
+      }
+      if (fs.classList.contains("has-error")) showQError(q, questionError(q));
+      saveDraft(); updateProgressOnly();
+    });
+  });
+  fs.appendChild(box);
+  if (q.kind === "multi") fs.appendChild(el("p", { class: "hint", id: "note-p12", "aria-hidden": "true" }));
+  fs.appendChild(el("div", { class: "err", id: "err-" + q.code, hidden: true }));
+  return fs;
+}
+function showQError(q, msg) {
+  const fs = document.getElementById("fs-" + q.code), e = document.getElementById("err-" + q.code);
+  if (!fs) return;
+  fs.classList.toggle("has-error", !!msg); e.textContent = msg; e.hidden = !msg;
+}
+function updateProgressOnly() {
+  const old = document.querySelector("#app .progress");
+  if (old) old.replaceWith(progressHeader());
+}
+
+function renderBlock(app, bn) {
+  const b = INSTRUMENT.blocks[bn - 1];
+  app.appendChild(progressHeader());
+  const first = Q[b.qs[0]].num, last = Q[b.qs[b.qs.length - 1]].num;
+  app.appendChild(el("h2", { text: "Parte " + bn + " de 4 · " + b.title }));
+  app.appendChild(el("p", { class: "muted", text: "Preguntas " + first + " a " + last + "." }));
+  const errSummary = el("div", { class: "notice danger", id: "err-summary", hidden: true, role: "alert" });
+  app.appendChild(errSummary);
+  b.qs.forEach(function (qc) { app.appendChild(renderQuestion(Q[qc])); });
+  app.appendChild(el("div", { class: "actions" },
+    el("button", { type: "button", class: "btn ghost", onclick: function () { goStep(S.step - 1); }, text: "Atrás" }),
+    el("span", { class: "spacer" }),
+    exitLink(),
+    el("button", { type: "button", class: "btn primary", onclick: function () {
+      let firstBad = null, n = 0;
+      b.qs.forEach(function (qc) { const m = questionError(Q[qc]); showQError(Q[qc], m); if (m) { n++; if (!firstBad) firstBad = Q[qc]; } });
+      if (firstBad) {
+        errSummary.hidden = false;
+        errSummary.textContent = n === 1 ? "Falta 1 pregunta por responder en esta parte." : "Faltan " + n + " preguntas por responder en esta parte.";
+        const target = firstBad.kind === "single" && S.answers[firstBad.code] && document.getElementById(firstBad.code + "_otro")
+          ? document.getElementById(firstBad.code + "_otro") : document.querySelector("#fs-" + firstBad.code + " input");
+        target.focus();
+        return;
+      }
+      if (S.returnToReview) { goStep(6); return; }
+      goStep(S.step + 1);
+    }, text: S.returnToReview ? "Volver a la revisión" : (bn === 4 ? "Revisar respuestas" : "Siguiente") })));
+}
+
+function answerText(q) {
+  if (q.kind === "multi") return (S.answers.p12 || []).map(function (c) { return optLabel("p12", c); }).join("; ") || "—";
+  const v = S.answers[q.code];
+  if (!v) return "Sin responder";
+  const op = q.options.find(function (x) { return x.code === v; });
+  return op.other ? op.label + " " + normName(S.otherText[q.code]) : op.label;
+}
+function renderReview(app) {
+  S.returnToReview = true;
+  app.appendChild(progressHeader());
+  app.appendChild(el("h2", { text: "Revise sus respuestas" }));
+  app.appendChild(el("p", { class: "muted", text: "Puede corregir cualquier parte con \"Editar\". Cuando todo esté bien, envíe sus respuestas." }));
+  const locked = S.pendingUncertain;
+  if (locked) app.appendChild(el("div", { class: "notice warn" }, el("strong", { text: "Hay un envío sin confirmar" }), "Para evitar diferencias, no se pueden editar las respuestas hasta confirmar el envío anterior."));
+  const sec0 = el("section", { class: "card review-block" },
+    el("header", {}, el("h3", { style: "margin:0", text: "Sus datos" }),
+      el("button", { type: "button", class: "btn secondary small", disabled: locked, onclick: function () { goStep(1); }, "aria-label": "Editar sus datos", text: "Editar" })),
+    el("dl", { class: "review" },
+      el("div", {}, el("dt", { text: "Nombre(s)" }), el("dd", { text: S.participant.nombres })),
+      el("div", {}, el("dt", { text: "Apellidos" }), el("dd", { text: S.participant.apellidos })),
+      el("div", {}, el("dt", { text: "Edad" }), el("dd", { text: S.participant.edad + " años" })),
+      el("div", {}, el("dt", { text: "Consentimiento" }), el("dd", { text: S.consent ? "Aceptado" : "No aceptado" }))));
+  app.appendChild(sec0);
+  let missing = 0;
+  INSTRUMENT.blocks.forEach(function (b) {
+    const dl = el("dl", { class: "review" });
+    b.qs.forEach(function (qc) {
+      const q = Q[qc]; const bad = questionError(q); if (bad) missing++;
+      dl.appendChild(el("div", {}, el("dt", { text: q.num + ". " + q.prompt }), el("dd", { style: bad ? "color:var(--danger)" : null, text: bad ? "Falta responder" : answerText(q) })));
+    });
+    app.appendChild(el("section", { class: "card review-block" },
+      el("header", {}, el("h3", { style: "margin:0", text: "Parte " + b.n + " · " + b.title }),
+        el("button", { type: "button", class: "btn secondary small", disabled: locked, "aria-label": "Editar la parte " + b.n, onclick: function () { goStep(b.n + 1); }, text: "Editar" })),
+      dl));
+  });
+  const identOk = !nameError(S.participant.nombres, "") && !nameError(S.participant.apellidos, "") && !ageError(S.participant.edad) && S.consent;
+  const ready = missing === 0 && identOk;
+  if (!ready) app.appendChild(el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "Faltan datos" }), "Complete lo marcado antes de enviar."));
+  app.appendChild(el("p", { class: "muted small", text: "Al enviar, sus respuestas se guardan en una base de datos protegida. Sus datos de identificación se guardan aparte y solo los puede consultar el investigador." }));
+  app.appendChild(el("div", { class: "actions" },
+    el("span", { class: "spacer" }), exitLink(),
+    el("button", { type: "button", class: "btn primary", id: "btn-send", disabled: !ready || !canStart() && !S.pendingUncertain, onclick: function () { goStep(7, { silent: true }); doSend(); }, text: "Enviar respuestas" })));
+  if (!canStart() && !S.pendingUncertain) { const sn = statusNotice(); if (sn) app.appendChild(sn); }
+}
+
+function renderSend(app) {
+  app.appendChild(progressHeader());
+  const box = el("section", { class: "card", "aria-labelledby": "t-send", "aria-busy": sending ? "true" : "false" });
+  box.appendChild(el("h2", { id: "t-send", text: "Envío de respuestas" }));
+  const out = S.outcome || (S.pendingUncertain ? { kind: "uncertain" } : null);
+  const acts = el("div", { class: "actions" });
+  const retry = el("button", { type: "button", class: "btn primary", disabled: sending, onclick: doSend, text: "Reintentar envío" });
+  const back = el("button", { type: "button", class: "btn secondary", disabled: sending, onclick: function () { S.outcome = null; goStep(6); }, text: "Volver a la revisión" });
+  if (sending || !out) {
+    box.appendChild(el("p", { role: "status" }, el("span", { class: "spinner", "aria-hidden": "true" }), " Enviando sus respuestas… No cierre esta página."));
+  } else if (out.kind === "uncertain") {
+    box.appendChild(el("div", { class: "notice warn", role: "alert" }, el("strong", { text: "No pudimos confirmar si sus respuestas se guardaron" }),
+      "Puede ser un problema de conexión. Reintentar es seguro: si ya se habían guardado, no se duplicarán y verá su folio."));
+    append(acts, [retry, el("span", { class: "spacer" }), exitLink()]);
+  } else if (out.kind === "invalid") {
+    const fixes = el("ul", { class: "clean" });
+    (out.errors || []).forEach(function (code) { fixes.appendChild(el("li", { text: serverErrorText(code) })); });
+    box.appendChild(el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "El servidor no aceptó algunos datos" }), fixes,
+      el("span", { text: "Sus respuestas no se guardaron. Corrija lo indicado y vuelva a enviar." })));
+    append(acts, [back, el("span", { class: "spacer" }), exitLink()]);
+  } else if (out.kind === "closed") {
+    box.appendChild(el("div", { class: "notice warn", role: "alert" }, el("strong", { text: "La recepción de respuestas está cerrada" }),
+      "Sus respuestas no se guardaron. Si el investigador vuelve a abrir la encuesta, podrá reintentar desde esta pestaña."));
+    append(acts, [retry, el("span", { class: "spacer" }), exitLink()]);
+  } else if (out.kind === "rate_limited") {
+    const mins = Math.max(1, Math.round((out.retry_after || 60) / 60));
+    box.appendChild(el("div", { class: "notice warn", role: "alert" }, el("strong", { text: "Se recibieron demasiados envíos en poco tiempo" }),
+      "Sus respuestas no se guardaron todavía. Intente de nuevo en unos " + mins + " minuto" + (mins === 1 ? "" : "s") + "."));
+    append(acts, [retry, back, el("span", { class: "spacer" }), exitLink()]);
+  } else if (out.kind === "conflict") {
+    box.appendChild(el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "Este envío ya se había registrado con otras respuestas" }),
+      "Para no sobrescribir datos, el servidor no hizo cambios. Si cree que es un error, comuníquelo al investigador."));
+    append(acts, [el("button", { type: "button", class: "btn secondary", onclick: resetSurvey, text: "Terminar y borrar de este dispositivo" })]);
+  } else if (out.kind === "origin") {
+    box.appendChild(el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "Dirección no autorizada por el servidor" }), "Sus respuestas no se guardaron. El investigador debe revisar ALLOWED_ORIGINS."));
+    append(acts, [retry, el("span", { class: "spacer" }), exitLink()]);
+  }
+  box.appendChild(acts);
+  app.appendChild(box);
+}
+function serverErrorText(code) {
+  const m = { nombres: "Revise su nombre o nombres.", apellidos: "Revise sus apellidos.", edad: "Revise su edad.", consent: "Falta aceptar el aviso.",
+              instrument_version: "La versión del cuestionario cambió. Recargue la página.", p12_combinacion: "Pregunta 12: \"Ninguna pérdida\" y \"No sé\" no se combinan con otras opciones.",
+              p12_repetida: "Pregunta 12: hay opciones repetidas.", tamano: "El envío es demasiado grande.", json: "El envío llegó dañado. Intente de nuevo." };
+  if (m[code]) return m[code];
+  const mm = /^p(\d+)(_otro)?/.exec(code);
+  if (mm) return "Revise la pregunta " + mm[1] + (mm[2] ? " (campo \"Otro\")." : ".");
+  return "Dato no válido (" + code + ").";
+}
+async function doSend() {
+  if (sending) return;
+  if (!S.key) S.key = uuidv4();
+  sending = true; S.outcome = null; saveDraft();
+  if (S.step !== 7) S.step = 7;
+  renderSurvey(); announce("Enviando sus respuestas");
+  let res;
+  try { res = await SurveyApi.submit(payloadFromState()); }
+  catch (e) { res = { kind: "uncertain" }; }
+  sending = false;
+  if (res.kind === "ok" || res.kind === "duplicate") {
+    S.result = { folio: res.folio, received_at: res.received_at };
+    S.pendingUncertain = false;
+    discardDraft();
+    S.participant = { nombres: "", apellidos: "", edad: "" }; S.answers = { p12: [] }; S.otherText = { p1: "", p2: "", p4: "", p7: "" };
+    S.step = 8; renderSurvey();
+    const h = document.querySelector("#app h2"); if (h) { h.setAttribute("tabindex", "-1"); h.focus(); }
+    announce("Respuestas guardadas. Folio " + res.folio);
+    return;
+  }
+  S.pendingUncertain = res.kind === "uncertain";
+  S.outcome = res; saveDraft(); renderSurvey();
+  const n = document.querySelector("#app [role=alert]"); if (n) { n.setAttribute("tabindex", "-1"); n.focus(); }
+}
+function renderConfirm(app) {
+  const r = S.result || {};
+  app.appendChild(el("section", { class: "card", "aria-labelledby": "t-ok", style: "text-align:center" },
+    el("div", { "aria-hidden": "true", style: "font-size:2.6rem;line-height:1;margin-bottom:8px;color:var(--teal)", text: "✓" }),
+    el("h2", { id: "t-ok", text: "¡Listo! Sus respuestas se guardaron" }),
+    el("p", { text: "Su folio de confirmación es:" }),
+    el("p", {}, el("span", { class: "folio", text: r.folio || "" })),
+    r.received_at ? el("p", { class: "muted small", text: ("Recibido el " + fmtDateTime.format(new Date(r.received_at)) + ".").replace(/\.\.$/, ".") }) : null,
+    el("p", { class: "muted small", text: "Guarde el folio si desea comentar su respuesta con el investigador. Ya no queda ningún borrador en este dispositivo." }),
+    el("p", { text: "Gracias por su participación." }),
+    el("div", { class: "actions", style: "justify-content:center" },
+      el("button", { type: "button", class: "btn secondary", onclick: function () { S = freshState(); goStep(0); }, text: "Nueva respuesta" })),
+    el("p", { class: "muted small", text: "\"Nueva respuesta\" sirve cuando otra persona, de otro negocio, va a contestar en este mismo dispositivo." })));
+}
+
+async function checkStatus() {
+  if (DEMO) { serverStatus = await DemoSurveyApi.status(); if (S.step === 0) renderSurvey(); return; }
+  if (/^sb_secret_/.test(CONFIG.SUPABASE_PUBLISHABLE_KEY) || /^sb_secret_/.test(CONFIG.SUPABASE_URL)) { serverStatus = { kind: "secret" }; renderSurvey(); return; }
+  if (!configured()) { serverStatus = { kind: "config" }; renderSurvey(); return; }
+  serverStatus = { kind: "loading" }; if (S.step === 0) renderSurvey();
+  const st = await RealSurveyApi.status();
+  if (st.kind === "ok") {
+    if (!localHash) { try { localHash = await sha256hex(instrumentString()); } catch (e) { localHash = "sin-https"; } }
+    st.mismatch = st.instrument_hash !== localHash || st.instrument_version !== INSTRUMENT.instrument_version || st.consent_version !== INSTRUMENT.consent_version;
+  }
+  serverStatus = st;
+  if (S.step === 0 || S.step === 6) renderSurvey();
+}
+
+/* =====================================================================
+   PANEL PRIVADO (#/panel)
+   La protección real está en el servidor: sesión de Supabase Auth + lista
+   encuesta.admins verificada dentro de cada función SQL. Esta interfaz no
+   decide quién es administrador; solo muestra lo que el servidor entrega.
+   ===================================================================== */
+const AdminApi = DEMO ? DemoAdminApi : RealAdminApi;
+const PAGE_SIZE_SERVER = 500;
+const PAGE_SIZE_TABLE = 25;
+function freshPanel() {
+  return { authed: false, rows: [], cfg: null, loadedAt: null, sig: "", tab: "resumen", page: 0, search: "",
+           filters: { from: "", to: "", p1: "", p2: "", p3: "", cls: "", level: "", estado: "incluidas" },
+           loading: false, error: "", printing: false, pollTimer: null };
+}
+let P = freshPanel();
+
+/* ---------- Diálogo genérico ---------- */
+function openDialog(title, build) {
+  const d = document.getElementById("dlg");
+  document.getElementById("dlg-title").textContent = title;
+  const body = document.getElementById("dlg-body"); clear(body);
+  build(body);
+  if (!d.open) { if (d.showModal) d.showModal(); else d.setAttribute("open", ""); }
+  const f = body.querySelector("button, input, select, textarea"); if (f) f.focus();
+}
+function closeDialog() {
+  const d = document.getElementById("dlg");
+  clear(document.getElementById("dlg-body")); // borra cualquier dato mostrado (p. ej., identificación)
+  if (d.open) { if (d.close) d.close(); else d.removeAttribute("open"); }
+}
+
+/* ---------- Datos ---------- */
+function filteredRows() {
+  const f = P.filters;
+  return P.rows.filter(function (r) {
+    if (f.estado === "incluidas" && r.excluded) return false;
+    if (f.estado === "excluidas" && !r.excluded) return false;
+    const day = localDay(r.received_at);
+    if (f.from && day < f.from) return false;
+    if (f.to && day > f.to) return false;
+    if (f.p1 && r.p1 !== f.p1) return false;
+    if (f.p2 && r.p2 !== f.p2) return false;
+    if (f.p3 && r.p3 !== f.p3) return false;
+    if (f.cls && r.classification !== f.cls) return false;
+    if (f.level && r.control_level !== f.level) return false;
+    return true;
+  });
+}
+async function refreshData(opts) {
+  if (P.loading) { P.again = true; return; } // se repite al terminar la carga en curso
+  P.loading = true; P.again = false; P.error = "";
+  setUpdateText("Actualizando…");
+  try {
+    const cfg = await AdminApi.getConfig();
+    const rows = [];
+    for (let offset = 0; ; offset += PAGE_SIZE_SERVER) {
+      const page = await AdminApi.list(PAGE_SIZE_SERVER, offset);
+      if (!Array.isArray(page)) throw new Error("Respuesta inesperada del servidor");
+      Array.prototype.push.apply(rows, page);
+      if (page.length < PAGE_SIZE_SERVER) break;
+    }
+    if (rows.length < cfg.total_responses) throw new Error("La carga quedó incompleta (" + rows.length + " de " + cfg.total_responses + "). Vuelva a actualizar.");
+    const sig = JSON.stringify(rows) + "|" + cfg.is_open;
+    const changed = sig !== P.sig;
+    P.rows = rows; P.cfg = cfg; P.sig = sig; P.loadedAt = new Date();
+    if (changed || (opts && opts.force)) renderPanelBody(); else setUpdateText();
+  } catch (e) {
+    if (e && e.unauthorized) { await logout("Su sesión ya no tiene permiso para ver el panel."); return; }
+    P.error = (e && e.message) || "Error al cargar los datos";
+    renderPanelBody();
+  } finally {
+    P.loading = false; setUpdateText();
+    if (P.again && P.authed) { P.again = false; refreshData({ force: true }); }
+  }
+}
+function setUpdateText(t) {
+  const n = document.getElementById("upd-text"); if (!n) return;
+  n.textContent = t || (P.loadedAt ? "Última actualización: " + fmtTime.format(P.loadedAt) + " · se actualiza cada " + CONFIG.POLL_SECONDS + " s (periódico, no instantáneo)" : "");
+}
+function startPolling() {
+  stopPolling();
+  P.pollTimer = setInterval(function () { if (!document.hidden && P.authed && !P.printing) refreshData(); }, Math.max(15, CONFIG.POLL_SECONDS) * 1000);
+}
+function stopPolling() { if (P.pollTimer) clearInterval(P.pollTimer); P.pollTimer = null; }
+async function logout(msg) {
+  stopPolling(); closeDialog();
+  P = freshPanel(); // elimina de la memoria los registros cargados
+  clear(document.getElementById("app"));
+  await AdminApi.signOut();
+  renderPanel(msg || "Sesión cerrada. Los datos se borraron de esta pantalla.");
+}
+
+/* ---------- Estadística ---------- */
+function freq(rows, qc) {
+  const q = Q[qc];
+  const counts = {}; q.options.forEach(function (x) { counts[x.code] = 0; });
+  let n = 0;
+  rows.forEach(function (r) {
+    if (q.kind === "multi") { if (r.p12 && r.p12.length) { n++; r.p12.forEach(function (c) { if (c in counts) counts[c]++; }); } }
+    else if (r[qc]) { n++; if (r[qc] in counts) counts[r[qc]]++; }
+  });
+  return { n: n, items: q.options.map(function (x) { return { code: x.code, label: x.label, count: counts[x.code], nosabe: x.nosabe }; }) };
+}
+const LEVEL_DEF = { code: "level", num: 0, short: "Nivel de control", options: [{ code: "bajo", label: LEVEL_LABELS.bajo }, { code: "medio", label: LEVEL_LABELS.medio }, { code: "alto", label: LEVEL_LABELS.alto }] };
+function dimOf(code) { return code === "level" ? LEVEL_DEF : Q[code]; }
+function valueOf(r, code) { return code === "level" ? r.control_level : r[code]; }
+function crosstab(rows, rowCode, colCode) {
+  const rd = dimOf(rowCode), cd = dimOf(colCode), multi = cd.kind === "multi";
+  const out = rd.options.map(function (ro) {
+    const sub = rows.filter(function (r) { return valueOf(r, rowCode) === ro.code; });
+    return { code: ro.code, label: ro.label, n: sub.length, cells: cd.options.map(function (co) {
+      const c = sub.filter(function (r) { const v = valueOf(r, colCode); return multi ? (v || []).includes(co.code) : v === co.code; }).length;
+      return { code: co.code, count: c, pct: pct(c, sub.length) };
+    }) };
+  });
+  return { rowDim: rd, colDim: cd, multi: multi, rows: out, total: rows.length };
+}
+const CROSSTABS = [
+  { id: "p6_p12", row: "p6", col: "p12", title: "Conteo físico (P6) y tipos de pérdida (P12)" },
+  { id: "p4_p14", row: "p4", col: "p14", title: "Herramienta de control (P4) y cambio en las ganancias (P14)" },
+  { id: "p7_p10", row: "p7", col: "p10", title: "Forma de decidir compras (P7) y faltantes (P10)" },
+  { id: "p7_p11", row: "p7", col: "p11", title: "Forma de decidir compras (P7) y mercancía sin vender (P11)" },
+  { id: "p13_p14", row: "p13", col: "p14", title: "Ventas (P13) frente a ganancias (P14)", margin: true },
+  { id: "p8_p5", row: "p8", col: "p5", title: "Pasos establecidos (P8) y registro de movimientos (P5)" },
+  { id: "p9_p5", row: "p9", col: "p5", title: "Capacitación (P9) y registro de movimientos (P5)" },
+  { id: "lvl_p10", row: "level", col: "p10", title: "Nivel de control y faltantes (P10)" },
+  { id: "lvl_p12", row: "level", col: "p12", title: "Nivel de control y tipos de pérdida (P12)" },
+  { id: "lvl_p14", row: "level", col: "p14", title: "Nivel de control y cambio en las ganancias (P14)" },
+  { id: "lvl_p15", row: "level", col: "p15", title: "Nivel de control y peso de las pérdidas sobre las ventas (P15)" }
+];
+function marginSubset(rows) { return rows.filter(function (r) { return r.p13 === "aumentaron" && (r.p14 === "igual" || r.p14 === "disminuyeron"); }); }
+
+/* ---------- Visualización ---------- */
+function barsFor(items, denom, alt) {
+  const box = el("div", { class: "bars" });
+  items.forEach(function (it) {
+    const p = pct(it.count, denom);
+    box.appendChild(el("div", { class: "barrow" + (it.nosabe ? " nosabe" : "") + (alt ? " alt" : "") },
+      el("div", { class: "top" }, el("span", { text: it.label }), el("span", { class: "n", text: it.count + " · " + pctText(it.count, denom) })),
+      el("div", { class: "track", "aria-hidden": "true" }, el("div", { class: "fill", style: "width:" + (p === null ? 0 : p.toFixed(2)) + "%" }))));
+  });
+  return box;
+}
+function emptyState(title, text) { return el("div", { class: "empty" }, el("b", { text: title }), text || ""); }
+function kpi(v, l, cls) { return el("div", { class: "kpi " + (cls || "") }, el("div", { class: "v", text: String(v) }), el("div", { class: "l", text: l })); }
+
+function selectFilter(id, label, options, value, onchange) {
+  const s = el("select", { id: id });
+  options.forEach(function (op) { const o2 = el("option", { value: op[0], text: op[1] }); if (op[0] === value) o2.selected = true; s.appendChild(o2); });
+  s.addEventListener("change", function () { onchange(s.value); });
+  return el("div", {}, el("label", { for: id, text: label }), s);
+}
+function filtersCard() {
+  const f = P.filters;
+  const set = function (k) { return function (v) { f[k] = v; P.page = 0; renderPanelBody(); }; };
+  const qOpts = function (qc) { return [["", "Todos"]].concat(Q[qc].options.map(function (x) { return [x.code, x.label]; })); };
+  const from = el("input", { type: "date", id: "f-from", value: f.from }); from.addEventListener("change", function () { set("from")(from.value); });
+  const to = el("input", { type: "date", id: "f-to", value: f.to }); to.addEventListener("change", function () { set("to")(to.value); });
+  const grid = el("div", { class: "filters" },
+    el("div", {}, el("label", { for: "f-from", text: "Desde (fecha de recepción)" }), from),
+    el("div", {}, el("label", { for: "f-to", text: "Hasta" }), to),
+    selectFilter("f-p1", "Giro (P1)", qOpts("p1"), f.p1, set("p1")),
+    selectFilter("f-p2", "Puesto (P2)", qOpts("p2"), f.p2, set("p2")),
+    selectFilter("f-p3", "Tamaño (P3)", qOpts("p3"), f.p3, set("p3")),
+    selectFilter("f-cls", "Clasificación", [["", "Todas"]].concat(Object.keys(CLASS_LABELS).map(function (k) { return [k, CLASS_LABELS[k]]; })), f.cls, set("cls")),
+    selectFilter("f-level", "Nivel de control", [["", "Todos"]].concat(Object.keys(LEVEL_LABELS).map(function (k) { return [k, LEVEL_LABELS[k]]; })), f.level, set("level")),
+    selectFilter("f-estado", "Estado", [["incluidas", "Solo incluidas"], ["todas", "Incluidas y excluidas"], ["excluidas", "Solo excluidas"]], f.estado, set("estado")));
+  const n = filteredRows().length;
+  return el("section", { class: "card filters-card", "aria-label": "Filtros" }, grid,
+    el("div", { class: "actions", style: "margin-top:12px" },
+      el("span", { class: "badge teal", role: "status", text: "Conjunto filtrado: " + n + " de " + P.rows.length + " respuestas" }),
+      el("span", { class: "spacer" }),
+      el("button", { type: "button", class: "btn ghost small", onclick: function () { P.filters = freshPanel().filters; P.page = 0; renderPanelBody(); }, text: "Quitar filtros" })),
+    el("p", { class: "muted small", style: "margin:8px 0 0", text: "Todos los totales, gráficas, comparaciones y exportaciones del conjunto filtrado usan todas las respuestas que cumplen los filtros, no solo una página. Para el análisis final de PYMES, filtre la clasificación \"PYME\"." }));
+}
+
+/* ---------- Pantallas del panel ---------- */
+function renderPanel(msg) {
+  const app = document.getElementById("app"); app.className = "wrap wide"; clear(app);
+  const hx = document.getElementById("header-extra"); clear(hx);
+  document.getElementById("header-wrap").className = "wrap wide";
+  document.getElementById("brand-text").textContent = "Panel del investigador";
+  if (!DEMO && !configured()) {
+    app.appendChild(el("section", { class: "card" }, el("h1", { text: "Panel del investigador" }),
+      el("div", { class: "notice warn" }, el("strong", { text: "Configuración pendiente" }), "Complete SUPABASE_URL y SUPABASE_PUBLISHABLE_KEY en el bloque CONFIG de index.html (ver GUIA.md)."),
+      el("p", {}, el("a", { href: "#/", text: "Ir a la encuesta" }))));
+    return;
+  }
+  if (!P.authed) return renderLogin(app, msg);
+  append(hx, [el("a", { href: "#/", class: "btn ghost small", text: "Ver encuesta" }), " ",
+    el("button", { type: "button", class: "btn secondary small", id: "btn-logout", onclick: function () { logout(); }, text: "Cerrar sesión" })]);
+  renderPanelBody();
+}
+function renderLogin(app, msg) {
+  const sec = el("section", { class: "card", style: "max-width:460px;margin:20px auto" });
+  append(sec, [el("h1", { text: "Panel del investigador" }),
+    el("p", { class: "muted", text: DEMO ? "Modo demostración: no hay datos reales ni contraseña. Pulse \"Entrar\"." : "Acceso solo para cuentas autorizadas por el servidor." })]);
+  if (msg) sec.appendChild(el("div", { class: "notice ok", role: "status", text: msg }));
+  const errBox = el("div", { class: "notice danger", id: "login-err", role: "alert", hidden: true });
+  sec.appendChild(errBox);
+  const email = el("input", { type: "email", id: "l-email", autocomplete: "username", required: true });
+  const pass = el("input", { type: "password", id: "l-pass", autocomplete: "current-password", required: true });
+  if (!DEMO) {
+    sec.appendChild(el("div", { class: "field" }, el("label", { for: "l-email", text: "Correo" }), email));
+    sec.appendChild(el("div", { class: "field" }, el("label", { for: "l-pass", text: "Contraseña" }), pass));
+  }
+  const btn = el("button", { type: "button", class: "btn primary", id: "btn-login", text: "Entrar" });
+  const go = async function () {
+    errBox.hidden = true;
+    if (!DEMO && (!email.value.trim() || !pass.value)) { errBox.textContent = "Escriba su correo y su contraseña."; errBox.hidden = false; (email.value.trim() ? pass : email).focus(); return; }
+    btn.disabled = true; btn.textContent = "Entrando…";
+    try {
+      await AdminApi.signIn(email.value.trim(), pass.value);
+      pass.value = "";
+      await afterAuth();
+    } catch (e) {
+      errBox.textContent = DEMO ? "Error en modo demo." : (e && /network|fetch|cargar/i.test(e.message || "") ? "No se pudo conectar con el servidor. Revise su conexión." : "No se pudo iniciar sesión. Revise el correo y la contraseña.");
+      errBox.hidden = false; btn.disabled = false; btn.textContent = "Entrar"; pass.focus();
+    }
+  };
+  btn.addEventListener("click", go);
+  pass.addEventListener("keydown", function (e) { if (e.key === "Enter") go(); });
+  sec.appendChild(el("div", { class: "actions" }, btn, el("a", { href: "#/", text: "Volver a la encuesta" })));
+  if (!DEMO) sec.appendChild(el("p", { class: "muted small", text: "La sesión se guarda solo en esta pestaña y se borra al cerrar sesión o cerrar la pestaña." }));
+  app.appendChild(sec);
+}
+async function afterAuth() {
+  let who;
+  try { who = await AdminApi.whoami(); } catch (e) { who = null; }
+  if (!who || who.is_admin !== true) {
+    await AdminApi.signOut();
+    P = freshPanel();
+    renderPanel();
+    const eb = document.getElementById("login-err");
+    if (eb) { eb.textContent = "Esta cuenta no está autorizada para ver el panel."; eb.hidden = false; }
+    return;
+  }
+  P.authed = true;
+  renderPanel();
+  await refreshData({ force: true });
+  startPolling();
+}
+
+function renderPanelBody() {
+  const app = document.getElementById("app");
+  if (!P.authed || location.hash !== "#/panel") return;
+  const keepScroll = window.scrollY;
+  clear(app);
+  const head = el("div", { class: "actions no-print", style: "margin:0 0 14px" },
+    el("h1", { style: "margin:0;flex:1 1 260px", text: "Panel del investigador" }),
+    el("span", { id: "upd-text", class: "muted small" }),
+    el("button", { type: "button", class: "btn secondary small", id: "btn-refresh", onclick: function () { refreshData({ force: true }); }, text: "Actualizar" }));
+  app.appendChild(head);
+  app.appendChild(el("div", { class: "print-only" }, el("h1", { text: "Resumen de resultados · " + INSTRUMENT.title }),
+    el("p", { text: "Generado: " + fmtDateTime.format(new Date()) + " · Respuestas en el conjunto: " + filteredRows().length + " · Filtros: " + describeFilters() })));
+  if (P.error) app.appendChild(el("div", { class: "notice danger", role: "alert" }, el("strong", { text: "No se pudieron cargar los datos" }), P.error));
+  if (!P.cfg) { app.appendChild(el("p", { role: "status", text: "Cargando datos…" })); setUpdateText(); return; }
+  if (!P.cfg.is_open) app.appendChild(el("div", { class: "notice warn no-print" }, el("strong", { text: "La recepción está cerrada" }), "Nadie puede enviar respuestas hasta que la abra en la pestaña \"Recepción y enlace\"."));
+
+  const tabs = [["resumen", "Resumen"], ["preguntas", "Preguntas"], ["comparaciones", "Comparaciones"], ["respuestas", "Respuestas"], ["exportar", "Exportar"], ["recepcion", "Recepción y enlace"]];
+  const tl = el("div", { class: "tabs", role: "tablist", "aria-label": "Secciones del panel" });
+  tabs.forEach(function (t, i) {
+    const b = el("button", { type: "button", role: "tab", id: "tab-" + t[0], "aria-selected": P.tab === t[0] ? "true" : "false", "aria-controls": "tabpanel", tabindex: P.tab === t[0] ? "0" : "-1", text: t[1] });
+    b.addEventListener("click", function () { P.tab = t[0]; renderPanelBody(); document.getElementById("tab-" + t[0]).focus(); });
+    b.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+      const j = (i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length;
+      P.tab = tabs[j][0]; renderPanelBody(); document.getElementById("tab-" + tabs[j][0]).focus();
+    });
+    tl.appendChild(b);
+  });
+  app.appendChild(tl);
+  if (["resumen", "preguntas", "comparaciones", "respuestas"].includes(P.tab) || P.printing) app.appendChild(filtersCard());
+  const panel = el("div", { id: "tabpanel", role: "tabpanel", "aria-labelledby": "tab-" + P.tab, class: "tabpanel" });
+  app.appendChild(panel);
+  if (P.printing) { renderResumen(panel); renderPreguntas(panel); renderComparaciones(panel); }
+  else ({ resumen: renderResumen, preguntas: renderPreguntas, comparaciones: renderComparaciones, respuestas: renderRespuestas, exportar: renderExportar, recepcion: renderRecepcion })[P.tab](panel);
+  setUpdateText();
+  window.scrollTo(0, keepScroll);
+}
+function describeFilters() {
+  const f = P.filters, parts = [];
+  if (f.from) parts.push("desde " + f.from); if (f.to) parts.push("hasta " + f.to);
+  if (f.p1) parts.push("giro: " + optLabel("p1", f.p1)); if (f.p2) parts.push("puesto: " + optLabel("p2", f.p2));
+  if (f.p3) parts.push("tamaño: " + optLabel("p3", f.p3)); if (f.cls) parts.push("clasificación: " + CLASS_LABELS[f.cls]);
+  if (f.level) parts.push("nivel: " + LEVEL_LABELS[f.level]);
+  parts.push(f.estado === "incluidas" ? "solo incluidas" : f.estado === "excluidas" ? "solo excluidas" : "incluidas y excluidas");
+  return parts.join("; ");
+}
+
+function renderResumen(panel) {
+  const all = P.rows, inc = all.filter(function (r) { return !r.excluded; });
+  const byCls = function (c) { return inc.filter(function (r) { return r.classification === c; }).length; };
+  panel.appendChild(el("h2", { text: "Resumen" }));
+  panel.appendChild(el("div", { class: "kpis" },
+    kpi(all.length, "Respuestas recibidas (total)", "violet"), kpi(inc.length, "Incluidas en el análisis", "teal"),
+    kpi(all.length - inc.length, "Excluidas (con motivo)"), kpi(filteredRows().length, "En el conjunto filtrado")));
+  panel.appendChild(el("h3", { text: "Clasificación de los negocios (respuestas incluidas)" }));
+  panel.appendChild(el("div", { class: "kpis" },
+    kpi(byCls("pyme"), "PYME", "violet"), kpi(byCls("micro"), "Microempresa (1 a 10)"),
+    kpi(byCls("fuera_alcance"), "Fuera de alcance"), kpi(byCls("por_revisar"), "Por revisar (giro \"Otro\")")));
+  panel.appendChild(el("p", { class: "muted small", text: "Regla operativa del estudio (no es una certificación legal): 1 a 10 trabajadores = microempresa; comercio o servicios con 11 a 100 = PYME; industria con 11 a 250 = PYME; por encima de esos límites = fuera de alcance; giro \"Otro\" = por revisar manualmente." }));
+  const rows = filteredRows();
+  const c = el("section", { class: "card" }, el("h3", { text: "Nivel de control del inventario (conjunto filtrado)" }));
+  if (!rows.length) c.appendChild(emptyState("Sin respuestas en este conjunto", P.rows.length ? "Ajuste los filtros para ver resultados." : "Aún no se ha recibido ninguna respuesta."));
+  else {
+    const items = ["bajo", "medio", "alto"].map(function (l) { return { label: LEVEL_LABELS[l], count: rows.filter(function (r) { return r.control_level === l; }).length }; });
+    c.appendChild(el("p", { class: "muted small", text: "n = " + rows.length + ". Puntaje de 0 a 6: un punto por cada buena práctica en P4 a P9. \"No sé\" no suma." }));
+    c.appendChild(barsFor(items, rows.length, true));
+    const withNs = rows.filter(function (r) { return r.nosabe_p4_p9 > 0; }).length;
+    const totalNs = rows.reduce(function (a, r) { return a + r.nosabe_p4_p9; }, 0);
+    c.appendChild(el("p", { class: "small", style: "margin-top:12px", text: "Respuestas con al menos un \"No sé\" en P4 a P9: " + withNs + " de " + rows.length + " (" + pctText(withNs, rows.length) + "). Total de \"No sé\" en esas preguntas: " + totalNs + "." }));
+    const avg = rows.reduce(function (a, r) { return a + r.control_score; }, 0) / rows.length;
+    c.appendChild(el("p", { class: "small", text: "Puntaje promedio: " + avg.toFixed(2) + " de 6." }));
+  }
+  panel.appendChild(c);
+}
+
+function renderPreguntas(panel) {
+  const rows = filteredRows();
+  panel.appendChild(el("h2", { text: "Resultados por pregunta" }));
+  panel.appendChild(el("p", { class: "muted small", text: "Cada porcentaje se calcula sobre las personas que respondieron esa pregunta (n). \"No sé\" se muestra como una opción más (barra rayada)." }));
+  if (!rows.length) { panel.appendChild(el("section", { class: "card" }, emptyState("Sin respuestas en este conjunto", P.rows.length ? "Ajuste los filtros." : "Aún no se ha recibido ninguna respuesta."))); return; }
+  const grid = el("div", { class: "qcards" });
+  INSTRUMENT.questions.forEach(function (q) {
+    const f = freq(rows, q.code);
+    const card = el("section", { class: "card", style: "margin:0" }, el("h3", { text: q.num + ". " + q.prompt }),
+      el("p", { class: "muted small", text: "n = " + f.n + (q.kind === "multi" ? " personas. Cada barra = % de personas que marcó esa opción; los porcentajes pueden sumar más de 100 %." : " respuestas.") }));
+    card.appendChild(barsFor(f.items, f.n));
+    const otroKey = q.code + "_otro";
+    if (OTHER_QS.includes(q.code)) {
+      const texts = {}; rows.forEach(function (r) { if (r[otroKey]) texts[r[otroKey]] = (texts[r[otroKey]] || 0) + 1; });
+      const keys = Object.keys(texts).sort();
+      if (keys.length) {
+        const ul = el("ul", { class: "clean small" });
+        keys.forEach(function (k) { ul.appendChild(el("li", { text: k + (texts[k] > 1 ? " (" + texts[k] + ")" : "") })); });
+        card.appendChild(el("details", { style: "margin-top:10px" }, el("summary", { text: "Textos escritos en \"" + optLabel(q.code, q.code === "p4" ? "otra" : "otro").replace(":", "") + "\" (" + keys.length + ")" }), ul));
+      }
+    }
+    grid.appendChild(card);
+  });
+  panel.appendChild(grid);
+}
+
+function crosstabTable(ct, caption) {
+  const t = el("table", { class: "data" }, el("caption", { class: "sr-only", text: caption }));
+  const hr = el("tr", {}, el("th", { scope: "col", text: (ct.rowDim.num ? "P" + ct.rowDim.num : ct.rowDim.short) + " \\ " + (ct.colDim.num ? "P" + ct.colDim.num : ct.colDim.short) }));
+  ct.colDim.options.forEach(function (co) { hr.appendChild(el("th", { scope: "col", class: "num", text: co.label })); });
+  hr.appendChild(el("th", { scope: "col", class: "num", text: "n de la fila" }));
+  t.appendChild(el("thead", {}, hr));
+  const tb = el("tbody");
+  ct.rows.forEach(function (r) {
+    const tr = el("tr", {}, el("th", { scope: "row", text: r.label }));
+    r.cells.forEach(function (c) {
+      tr.appendChild(el("td", { class: "num" }, r.n ? String(c.count) : "—", r.n ? el("span", { class: "cell-pct", text: pctText(c.count, r.n) }) : null));
+    });
+    tr.appendChild(el("td", { class: "num", text: String(r.n) }));
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb);
+  return el("div", { class: "tablewrap" }, t);
+}
+function renderComparaciones(panel) {
+  const rows = filteredRows();
+  panel.appendChild(el("h2", { text: "Comparaciones (tablas cruzadas)" }));
+  panel.appendChild(el("p", { class: "muted small", text: "Porcentajes por fila: cada fila suma sus propios casos (n de la fila). Muestran relaciones observadas en quienes respondieron; no prueban que una cosa cause la otra. Con grupos pequeños, mire también los conteos." }));
+  if (!rows.length) { panel.appendChild(el("section", { class: "card" }, emptyState("Sin respuestas en este conjunto", P.rows.length ? "Ajuste los filtros." : "Aún no se ha recibido ninguna respuesta."))); return; }
+  CROSSTABS.forEach(function (d) {
+    const ct = crosstab(rows, d.row, d.col);
+    const card = el("section", { class: "card" }, el("h3", { text: d.title }));
+    if (ct.multi) card.appendChild(el("p", { class: "muted small", text: "P12 permite varias opciones: cada celda es el % de negocios de la fila que marcó ese tipo; una fila puede sumar más de 100 %." }));
+    card.appendChild(crosstabTable(ct, d.title));
+    if (d.margin) {
+      const sub = marginSubset(rows);
+      card.appendChild(el("h4", { style: "margin:16px 0 6px", text: "Casos para revisar: ventas aumentaron y ganancias se mantuvieron o disminuyeron (n = " + sub.length + ")" }));
+      card.appendChild(el("p", { class: "muted small", text: "Pueden señalar una posible pérdida de margen; se revisan sus respuestas a P11 y P15. No se calcula ningún margen en dinero." }));
+      if (!sub.length) card.appendChild(emptyState("No hay casos con esta combinación"));
+      else {
+        const g = el("div", { class: "qcards" });
+        ["p11", "p15"].forEach(function (qc) { const f = freq(sub, qc); g.appendChild(el("div", {}, el("strong", { text: "P" + Q[qc].num + " (n = " + f.n + ")" }), barsFor(f.items, f.n))); });
+        card.appendChild(g);
+      }
+    }
+    panel.appendChild(card);
+  });
+}
+
+function renderRespuestas(panel) {
+  let rows = filteredRows().slice().reverse(); // más recientes primero
+  const sv = P.search.trim().toUpperCase();
+  if (sv) rows = rows.filter(function (r) { return r.folio.indexOf(sv) >= 0; });
+  panel.appendChild(el("h2", { text: "Respuestas" }));
+  const search = el("input", { type: "text", id: "s-folio", placeholder: "INV-…", value: P.search, style: "max-width:240px", autocomplete: "off" });
+  search.addEventListener("input", function () { P.search = search.value; P.page = 0; const pos = search.selectionStart; renderPanelBody(); const s2 = document.getElementById("s-folio"); s2.focus(); try { s2.setSelectionRange(pos, pos); } catch (e) { /* nada */ } });
+  panel.appendChild(el("div", { class: "field" }, el("label", { for: "s-folio", text: "Buscar por folio" }), search));
+  if (!rows.length) { panel.appendChild(el("section", { class: "card" }, emptyState("No hay respuestas que mostrar", P.rows.length ? "Ajuste los filtros o la búsqueda." : "Aún no se ha recibido ninguna respuesta."))); return; }
+  const pages = Math.ceil(rows.length / PAGE_SIZE_TABLE);
+  P.page = Math.min(P.page, pages - 1);
+  const slice = rows.slice(P.page * PAGE_SIZE_TABLE, (P.page + 1) * PAGE_SIZE_TABLE);
+  const t = el("table", { class: "data" });
+  const cols = ["Folio", "Recibida", "Giro (P1)", "Puesto (P2)", "Tamaño (P3)", "Clasificación", "Puntaje", "Nivel", "Estado", ""];
+  t.appendChild(el("thead", {}, el("tr", {}, cols.map(function (c) { return el("th", { scope: "col", class: c === "Puntaje" ? "num" : null, text: c }); }))));
+  const tb = el("tbody");
+  slice.forEach(function (r) {
+    tb.appendChild(el("tr", { class: r.excluded ? "excluded" : null },
+      el("td", { style: "font-family:ui-monospace,monospace", text: r.folio }),
+      el("td", { text: fmtDateTime.format(new Date(r.received_at)) }),
+      el("td", { text: optLabel("p1", r.p1) + (r.p1_otro ? " " + r.p1_otro : "") }),
+      el("td", { text: optLabel("p2", r.p2) + (r.p2_otro ? " " + r.p2_otro : "") }),
+      el("td", { text: optLabel("p3", r.p3) }),
+      el("td", {}, CLASS_LABELS[r.classification] || r.classification, r.classification_manual ? el("span", { class: "cell-pct", text: "revisada" }) : null),
+      el("td", { class: "num", text: String(r.control_score) }),
+      el("td", { text: r.control_level }),
+      el("td", { text: r.excluded ? "Excluida" : "Incluida" }),
+      el("td", {}, el("button", { type: "button", class: "btn secondary small", "aria-label": "Ver detalle " + r.folio, onclick: function () { openDetail(r.id); }, text: "Ver" }))));
+  });
+  t.appendChild(tb);
+  panel.appendChild(el("div", { class: "tablewrap" }, t));
+  panel.appendChild(el("div", { class: "pager" },
+    el("span", { class: "muted small", text: "Mostrando " + (P.page * PAGE_SIZE_TABLE + 1) + "–" + (P.page * PAGE_SIZE_TABLE + slice.length) + " de " + rows.length }),
+    el("button", { type: "button", class: "btn ghost small", disabled: P.page === 0, onclick: function () { P.page--; renderPanelBody(); }, text: "Anterior" }),
+    el("button", { type: "button", class: "btn ghost small", disabled: P.page >= pages - 1, onclick: function () { P.page++; renderPanelBody(); }, text: "Siguiente" })));
+}
+
+function openDetail(id) {
+  const r = P.rows.find(function (x) { return x.id === id; });
+  if (!r) return;
+  openDialog("Respuesta " + r.folio, function (body) {
+    const dl = el("dl", { class: "review" });
+    const add = function (k, v) { dl.appendChild(el("div", {}, el("dt", { text: k }), el("dd", { text: v }))); };
+    add("ID interno", r.id); add("Recibida", fmtDateTime.format(new Date(r.received_at)));
+    add("Versiones", "Instrumento " + r.instrument_version + " · Consentimiento " + r.consent_version);
+    add("Clasificación", (CLASS_LABELS[r.classification] || r.classification) + (r.classification_manual ? " (revisada; automática: " + CLASS_LABELS[r.auto_classification] + ")" : " (automática)"));
+    add("Puntaje de control", r.control_score + " de 6 · nivel " + r.control_level + " · \"No sé\" en P4–P9: " + r.nosabe_p4_p9);
+    add("Estado", r.excluded ? "Excluida: " + (r.exclusion_reason || "") : "Incluida en el análisis");
+    body.appendChild(dl);
+    body.appendChild(el("h3", { style: "margin-top:18px", text: "Respuestas" }));
+    const dl2 = el("dl", { class: "review" });
+    INSTRUMENT.questions.forEach(function (q) {
+      let v = q.kind === "multi" ? (r.p12 || []).map(function (c) { return optLabel("p12", c); }).join("; ") : optLabel(q.code, r[q.code]);
+      if (r[q.code + "_otro"]) v += " " + r[q.code + "_otro"];
+      dl2.appendChild(el("div", {}, el("dt", { text: q.num + ". " + q.prompt }), el("dd", { text: v })));
+    });
+    body.appendChild(dl2);
+
+    const idBox = el("div", { class: "card soft", style: "margin-top:18px" }, el("h3", { text: "Identificación (restringida)" }),
+      el("p", { class: "muted small", text: "Los datos de identificación están en una tabla separada. Consultarlos queda registrado en la bitácora del servidor. Se borran de la pantalla al cerrar esta ventana." }));
+    const idOut = el("div", { id: "id-out" });
+    const idBtn = el("button", { type: "button", class: "btn secondary small", text: "Mostrar identificación" });
+    idBtn.addEventListener("click", async function () {
+      idBtn.disabled = true;
+      try {
+        const p = await AdminApi.getIdentity(r.id);
+        clear(idOut);
+        if (!p) idOut.appendChild(el("p", { text: "No hay datos de identificación para esta respuesta." }));
+        else idOut.appendChild(el("dl", { class: "review" },
+          el("div", {}, el("dt", { text: "Nombre(s)" }), el("dd", { text: p.nombres })),
+          el("div", {}, el("dt", { text: "Apellidos" }), el("dd", { text: p.apellidos })),
+          el("div", {}, el("dt", { text: "Edad" }), el("dd", { text: String(p.edad) }))));
+      } catch (e) { clear(idOut); idOut.appendChild(el("p", { class: "err", text: e.unauthorized ? "Sin permiso." : "No se pudo consultar." })); idBtn.disabled = false; }
+    });
+    append(idBox, [idBtn, idOut]);
+    body.appendChild(idBox);
+
+    const exBox = el("div", { class: "card soft" }, el("h3", { text: r.excluded ? "Volver a incluir" : "Excluir del análisis" }),
+      el("p", { class: "muted small", text: "La respuesta original nunca se modifica. Se guarda una decisión con motivo, fecha y responsable." }));
+    const exReason = el("textarea", { id: "ex-reason", rows: "2", maxlength: "500", "aria-describedby": "ex-err" });
+    const exErr = el("div", { class: "err", id: "ex-err", hidden: true });
+    const exBtn = el("button", { type: "button", class: r.excluded ? "btn secondary small" : "btn danger small", text: r.excluded ? "Volver a incluir" : "Excluir" });
+    exBtn.addEventListener("click", async function () {
+      const reason = exReason.value.trim();
+      if (reason.length < 3) { exErr.textContent = "Escriba un motivo (mínimo 3 caracteres)."; exErr.hidden = false; exReason.setAttribute("aria-invalid", "true"); exReason.focus(); return; }
+      exBtn.disabled = true;
+      try { await AdminApi.setExclusion(r.id, !r.excluded, reason); closeDialog(); await refreshData({ force: true }); openDetail(r.id); announce("Decisión guardada"); }
+      catch (e) { exErr.textContent = e.message || "No se pudo guardar."; exErr.hidden = false; exBtn.disabled = false; }
+    });
+    append(exBox, [el("div", { class: "field" }, el("label", { for: "ex-reason", text: "Motivo" }), exReason, exErr), exBtn]);
+    body.appendChild(exBox);
+
+    const clBox = el("div", { class: "card soft" }, el("h3", { text: "Revisar clasificación" }),
+      el("p", { class: "muted small", text: "Útil sobre todo para giros \"Otro\". Se guarda como decisión aparte; la clasificación automática se conserva." }));
+    const clSel = el("select", { id: "cl-sel" });
+    Object.keys(CLASS_LABELS).forEach(function (k) { const op = el("option", { value: k, text: CLASS_LABELS[k] }); if (k === r.classification) op.selected = true; clSel.appendChild(op); });
+    const clReason = el("textarea", { id: "cl-reason", rows: "2", maxlength: "500", "aria-describedby": "cl-err" });
+    const clErr = el("div", { class: "err", id: "cl-err", hidden: true });
+    const clBtn = el("button", { type: "button", class: "btn secondary small", text: "Guardar clasificación" });
+    clBtn.addEventListener("click", async function () {
+      const reason = clReason.value.trim();
+      if (reason.length < 3) { clErr.textContent = "Escriba un motivo (mínimo 3 caracteres)."; clErr.hidden = false; clReason.setAttribute("aria-invalid", "true"); clReason.focus(); return; }
+      clBtn.disabled = true;
+      try { await AdminApi.setClassification(r.id, clSel.value, reason); closeDialog(); await refreshData({ force: true }); openDetail(r.id); announce("Clasificación guardada"); }
+      catch (e) { clErr.textContent = e.message || "No se pudo guardar."; clErr.hidden = false; clBtn.disabled = false; }
+    });
+    append(clBox, [el("div", { class: "field" }, el("label", { for: "cl-sel", text: "Clasificación" }), clSel),
+                   el("div", { class: "field" }, el("label", { for: "cl-reason", text: "Motivo" }), clReason, clErr), clBtn]);
+    body.appendChild(clBox);
+
+    const hist = el("div", { class: "card soft" }, el("h3", { text: "Historial de decisiones" }), el("p", { class: "muted small", text: "Cargando…" }));
+    body.appendChild(hist);
+    AdminApi.history(r.id).then(function (h) {
+      clear(hist); hist.appendChild(el("h3", { text: "Historial de decisiones" }));
+      const items = [].concat((h.exclusions || []).map(function (e) { return { at: e.created_at, t: (e.excluded ? "Excluida" : "Incluida") + ": " + e.reason, by: e.created_by }; }),
+                              (h.classifications || []).map(function (e) { return { at: e.created_at, t: "Clasificación → " + (CLASS_LABELS[e.classification] || e.classification) + ": " + e.reason, by: e.created_by }; }))
+        .sort(function (a, b) { return a.at < b.at ? -1 : 1; });
+      if (!items.length) { hist.appendChild(el("p", { class: "muted small", text: "Sin decisiones registradas." })); return; }
+      const ul = el("ul", { class: "clean small" });
+      items.forEach(function (it) { ul.appendChild(el("li", { text: fmtDateTime.format(new Date(it.at)) + " · " + it.t + " · responsable: " + String(it.by).slice(0, 8) })); });
+      hist.appendChild(ul);
+    }).catch(function () { clear(hist); hist.appendChild(el("p", { class: "err", text: "No se pudo cargar el historial." })); });
+  });
+}
+
+/* ---------- Exportación ---------- */
+function csvCell(v) {
+  let s = v === null || v === undefined ? "" : String(v);
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; // evita que Excel lo interprete como fórmula
+  return "\"" + s.replace(/"/g, "\"\"") + "\"";
+}
+function toCsv(rows) { return "﻿" + rows.map(function (r) { return r.map(csvCell).join(","); }).join("\r\n") + "\r\n"; }
+function download(name, text) {
+  const blob = new Blob([text], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = el("a", { href: url, download: name }); document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+}
+function stamp() { const d = new Date(); return d.getFullYear() + String(d.getMonth() + 1).padStart(2, "0") + String(d.getDate()).padStart(2, "0") + "-" + String(d.getHours()).padStart(2, "0") + String(d.getMinutes()).padStart(2, "0"); }
+function analyticCsv(rows) {
+  const p12opts = Q.p12.options;
+  const head = ["id", "folio", "fecha_recepcion_utc", "encuesta", "version_instrumento", "version_consentimiento"];
+  INSTRUMENT.questions.forEach(function (q) {
+    if (q.kind === "multi") p12opts.forEach(function (op) { head.push("p12_" + op.code); });
+    else { head.push(q.code); if (OTHER_QS.includes(q.code)) head.push(q.code + "_otro"); }
+  });
+  head.push("clasificacion_automatica", "clasificacion_efectiva", "clasificacion_revisada", "puntaje_control", "nivel_control", "no_se_p4_p9", "estado", "motivo_exclusion");
+  const out = [head];
+  rows.forEach(function (r) {
+    const line = [r.id, r.folio, r.received_at, r.survey_id, r.instrument_version, r.consent_version];
+    INSTRUMENT.questions.forEach(function (q) {
+      if (q.kind === "multi") p12opts.forEach(function (op) { line.push((r.p12 || []).includes(op.code) ? "Sí" : "No"); });
+      else { line.push(optLabel(q.code, r[q.code])); if (OTHER_QS.includes(q.code)) line.push(r[q.code + "_otro"] || ""); }
+    });
+    line.push(CLASS_LABELS[r.auto_classification], CLASS_LABELS[r.classification], r.classification_manual ? "Sí" : "No",
+              r.control_score, r.control_level, r.nosabe_p4_p9, r.excluded ? "Excluida" : "Incluida", r.exclusion_reason || "");
+    out.push(line);
+  });
+  return toCsv(out);
+}
+function freqCsv(rows) {
+  const out = [["pregunta", "numero", "texto_pregunta", "opcion_codigo", "opcion", "frecuencia", "denominador_n", "porcentaje", "nota"]];
+  INSTRUMENT.questions.forEach(function (q) {
+    const f = freq(rows, q.code);
+    f.items.forEach(function (it) {
+      const p = pct(it.count, f.n);
+      out.push([q.code, q.num, q.prompt, it.code, it.label, it.count, f.n, p === null ? "" : p.toFixed(1), q.kind === "multi" ? "Opción múltiple: % de personas; puede sumar más de 100 %" : ""]);
+    });
+  });
+  out.push([], ["nivel_control", "", "Nivel de control (P4–P9)", "", "", "", rows.length, "", "Puntaje 0–6"]);
+  ["bajo", "medio", "alto"].forEach(function (l) { const c = rows.filter(function (r) { return r.control_level === l; }).length; const p = pct(c, rows.length); out.push(["nivel_control", "", "", l, LEVEL_LABELS[l], c, rows.length, p === null ? "" : p.toFixed(1), ""]); });
+  return toCsv(out);
+}
+function crossCsv(rows) {
+  const out = [["comparacion", "fila_variable", "fila", "n_fila", "columna_variable", "columna", "frecuencia", "porcentaje_fila"]];
+  CROSSTABS.forEach(function (d) {
+    const ct = crosstab(rows, d.row, d.col);
+    ct.rows.forEach(function (r) { r.cells.forEach(function (c, i) {
+      out.push([d.title, d.row, r.label, r.n, d.col, ct.colDim.options[i].label, c.count, c.pct === null ? "" : c.pct.toFixed(1)]);
+    }); });
+    if (d.margin) {
+      const sub = marginSubset(rows);
+      ["p11", "p15"].forEach(function (qc) { const f = freq(sub, qc); f.items.forEach(function (it) {
+        out.push(["Revisión de margen (ventas aumentaron; ganancias igual o menores)", "subconjunto", "P13=Aumentaron y P14=Igual/Disminuyeron", sub.length, qc, it.label, it.count, f.n ? (100 * it.count / f.n).toFixed(1) : ""]);
+      }); });
+    }
+  });
+  return toCsv(out);
+}
+function dictCsv() {
+  const out = [["pregunta", "numero", "tipo", "bloque", "texto_pregunta", "opcion_codigo", "posicion", "opcion", "abre_otro", "excluyente", "es_no_se", "puntos_control"]];
+  INSTRUMENT.questions.forEach(function (q) { q.options.forEach(function (op, i) {
+    out.push([q.code, q.num, q.kind === "multi" ? "múltiple" : "única", q.block, q.prompt, op.code, i + 1, op.label, op.other ? "Sí" : "No", op.exclusive ? "Sí" : "No", op.nosabe ? "Sí" : "No", op.points]);
+  }); });
+  return toCsv(out);
+}
+function renderExportar(panel) {
+  const rows = filteredRows();
+  panel.appendChild(el("h2", { text: "Exportar" }));
+  panel.appendChild(el("p", { class: "muted", text: "Archivos CSV en UTF-8 que Excel abre con acentos correctos. Las celdas que empiezan con =, +, -, @ se neutralizan con un apóstrofo para que Excel no las ejecute como fórmulas." }));
+  const c1 = el("section", { class: "card" }, el("h3", { text: "Datos para análisis (sin nombres ni edad)" }),
+    el("p", { class: "small", text: "Una fila por respuesta, con columnas Sí/No para cada opción de P12, campos \"Otro\", clasificación, puntaje, nivel y estado de inclusión." }),
+    el("div", { class: "actions" },
+      el("button", { type: "button", class: "btn primary small", disabled: !rows.length, onclick: function () { download("respuestas-filtradas-" + stamp() + ".csv", analyticCsv(rows)); }, text: "CSV del conjunto filtrado (" + rows.length + ")" }),
+      el("button", { type: "button", class: "btn secondary small", disabled: !P.rows.length, onclick: function () { download("respuestas-todas-" + stamp() + ".csv", analyticCsv(P.rows)); }, text: "CSV de todas (" + P.rows.length + ")" })));
+  const c2 = el("section", { class: "card" }, el("h3", { text: "Tablas de resultados" }),
+    el("div", { class: "actions" },
+      el("button", { type: "button", class: "btn secondary small", disabled: !rows.length, onclick: function () { download("frecuencias-" + stamp() + ".csv", freqCsv(rows)); }, text: "Frecuencias (conjunto filtrado)" }),
+      el("button", { type: "button", class: "btn secondary small", disabled: !rows.length, onclick: function () { download("comparaciones-" + stamp() + ".csv", crossCsv(rows)); }, text: "Comparaciones (conjunto filtrado)" }),
+      el("button", { type: "button", class: "btn secondary small", onclick: function () { download("diccionario-encuesta.csv", dictCsv()); }, text: "Diccionario de códigos" }),
+      el("button", { type: "button", class: "btn ghost small", disabled: !rows.length, onclick: printSummary, text: "Imprimir resumen" })));
+  const c3 = el("section", { class: "card" }, el("h3", { text: "Exportación con identificación" }),
+    el("div", { class: "notice warn" }, el("strong", { text: "Contiene datos personales" }), "Incluye nombre, apellidos y edad ligados al folio. Guárdelo en un lugar protegido, no lo comparta y no lo use para presentar resultados. La descarga queda registrada en el servidor."),
+    el("button", { type: "button", class: "btn danger small", disabled: !P.rows.length, onclick: confirmIdentExport, text: "Exportar identificación…" }));
+  append(panel, [c1, c2, c3]);
+}
+function confirmIdentExport() {
+  openDialog("Exportar identificación", function (body) {
+    const cb = el("input", { type: "checkbox", id: "ident-ok" });
+    const btn = el("button", { type: "button", class: "btn danger", disabled: true, text: "Descargar CSV con identificación" });
+    cb.addEventListener("change", function () { btn.disabled = !cb.checked; });
+    const msg = el("p", { class: "err", hidden: true });
+    btn.addEventListener("click", async function () {
+      btn.disabled = true;
+      try { const list = await AdminApi.exportIdentities();
+        const out = [["id", "folio", "fecha_recepcion_utc", "nombres", "apellidos", "edad"]];
+        (list || []).forEach(function (p) { out.push([p.id, p.folio, p.received_at, p.nombres, p.apellidos, p.edad]); });
+        download("IDENTIFICACION-CONFIDENCIAL-" + stamp() + ".csv", toCsv(out)); closeDialog(); announce("Descarga iniciada");
+      } catch (e) { msg.textContent = e.unauthorized ? "Sin permiso." : "No se pudo exportar."; msg.hidden = false; btn.disabled = false; }
+    });
+    append(body, [el("p", { text: "El archivo incluirá nombre, apellidos y edad de todas las respuestas, ligados a su folio." }),
+      el("label", { class: "consent", for: "ident-ok" }, cb, el("span", { text: "Entiendo que el archivo contiene datos personales y lo resguardaré." })),
+      msg, el("div", { class: "actions" }, btn, el("button", { type: "button", class: "btn ghost", onclick: closeDialog, text: "Cancelar" }))]);
+  });
+}
+function printSummary() {
+  P.printing = true; renderPanelBody();
+  const done = function () { window.removeEventListener("afterprint", done); P.printing = false; renderPanelBody(); };
+  window.addEventListener("afterprint", done);
+  setTimeout(function () { window.print(); }, 50);
+}
+
+/* ---------- Recepción, enlace y QR ---------- */
+function renderRecepcion(panel) {
+  panel.appendChild(el("h2", { text: "Recepción y enlace" }));
+  const open = !!P.cfg.is_open;
+  const toggle = el("button", { type: "button", class: open ? "btn danger" : "btn primary", id: "btn-toggle-open", text: open ? "Cerrar recepción" : "Abrir recepción" });
+  toggle.addEventListener("click", function () {
+    openDialog(open ? "Cerrar recepción" : "Abrir recepción", function (body) {
+      append(body, [el("p", { text: open ? "Al cerrar, el servidor rechazará cualquier envío nuevo. Las respuestas ya guardadas no cambian." : "Al abrir, cualquier persona con el enlace podrá enviar respuestas." }),
+        el("div", { class: "actions" }, el("button", { type: "button", class: "btn primary", id: "btn-confirm-open", onclick: async function (ev) {
+          ev.target.disabled = true;
+          try { await AdminApi.setOpen(!open); closeDialog(); await refreshData({ force: true }); announce(open ? "Recepción cerrada" : "Recepción abierta"); }
+          catch (e) { ev.target.disabled = false; body.appendChild(el("p", { class: "err", text: "No se pudo cambiar: " + (e.message || "error") })); }
+        }, text: open ? "Sí, cerrar" : "Sí, abrir" }), el("button", { type: "button", class: "btn ghost", onclick: closeDialog, text: "Cancelar" }))]);
+    });
+  });
+  panel.appendChild(el("section", { class: "card" }, el("h3", { text: "Estado de la recepción" }),
+    el("p", {}, el("span", { class: open ? "badge ok" : "badge warn", text: open ? "Abierta" : "Cerrada" }), " ", el("span", { class: "muted small", text: "Controlada en el servidor (no depende de esta página)." })),
+    toggle));
+
+  const hashBox = el("p", { class: "small", text: "Comprobando huella del cuestionario…" });
+  sha256hex(instrumentString()).then(function (h) {
+    const ok = h === P.cfg.instrument_hash;
+    clear(hashBox);
+    append(hashBox, [el("span", { class: ok ? "badge ok" : "badge danger", text: ok ? "Coinciden" : "NO coinciden" }), " Preguntas de la página y del servidor (" + INSTRUMENT.instrument_version + "). " + (ok ? "" : "El cuestionario bloqueará los envíos hasta corregirlo.")]);
+  });
+  const pend = [];
+  if (!CONFIG.PUBLIC_URL) pend.push("PUBLIC_URL (enlace público para compartir y QR)");
+  if (!CONFIG.CONTACTO) pend.push("CONTACTO (medio para dudas; opcional pero recomendable)");
+  if (!CONFIG.CONSERVACION) pend.push("CONSERVACION (cuánto tiempo se guardarán los datos; opcional pero recomendable)");
+  if (!CONFIG.INVESTIGADOR) pend.push("INVESTIGADOR (nombre que verá el participante en el aviso; opcional)");
+  panel.appendChild(el("section", { class: "card" }, el("h3", { text: "Revisión de configuración" }), hashBox,
+    pend.length ? el("div", {}, el("p", { class: "small", text: "Valores pendientes en el bloque CONFIG de index.html:" }), el("ul", { class: "clean small" }, pend.map(function (p) { return el("li", { text: p }); })))
+                : el("p", { class: "small", text: "Todos los valores opcionales del aviso están completos." })));
+
+  const linkCard = el("section", { class: "card" }, el("h3", { text: "Enlace para compartir" }));
+  if (!CONFIG.PUBLIC_URL) {
+    linkCard.appendChild(el("div", { class: "notice warn" }, el("strong", { text: "Pendiente" }), "Cuando publique la página, escriba su dirección en PUBLIC_URL (bloque CONFIG). Entonces aparecerán aquí el botón para copiar el enlace y el código QR."));
+    append(linkCard, el("div", { class: "actions" }, el("button", { type: "button", class: "btn secondary small", disabled: true, text: "Copiar enlace" })));
+  } else {
+    const url = CONFIG.PUBLIC_URL;
+    const inp = el("input", { type: "text", readonly: true, value: url, id: "pub-url", "aria-label": "Enlace público" });
+    const copyMsg = el("span", { class: "muted small", role: "status" });
+    const copy = el("button", { type: "button", class: "btn secondary small", text: "Copiar enlace" });
+    copy.addEventListener("click", async function () {
+      try { await navigator.clipboard.writeText(url); } catch (e) { inp.select(); try { document.execCommand("copy"); } catch (e2) { /* nada */ } }
+      copyMsg.textContent = "Enlace copiado.";
+    });
+    const qrWrap = el("div", { class: "qr-box" }, el("p", { class: "muted small", text: "Generando código QR…" }));
+    append(linkCard, [inp, el("div", { class: "actions" }, copy, copyMsg), qrWrap]);
+    loadLib("qrcode").then(function () {
+      clear(qrWrap);
+      const qr = window.qrcode(0, "M"); qr.addData(url); qr.make();
+      const n = qr.getModuleCount(), scale = 8, margin = 4, size = (n + margin * 2) * scale;
+      const cv = el("canvas", { width: String(size), height: String(size), role: "img", "aria-label": "Código QR del enlace " + url, id: "qr-canvas" });
+      const ctx = cv.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, size, size); ctx.fillStyle = "#000";
+      for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) if (qr.isDark(r, c)) ctx.fillRect((c + margin) * scale, (r + margin) * scale, scale, scale);
+      const dl = el("button", { type: "button", class: "btn secondary small", text: "Descargar QR (PNG)" });
+      dl.addEventListener("click", function () { cv.toBlob(function (b) { const u = URL.createObjectURL(b); const a = el("a", { href: u, download: "qr-encuesta.png" }); document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 2000); }); });
+      append(qrWrap, [cv, el("div", {}, el("p", { class: "small", text: "Escanee para abrir la encuesta." }), dl)]);
+    }).catch(function () { clear(qrWrap); qrWrap.appendChild(el("p", { class: "err", text: "No se pudo cargar el generador de QR (revise su conexión). El enlace sigue funcionando." })); });
+  }
+  panel.appendChild(linkCard);
+
+  if (DEMO) {
+    const failSel = el("select", { id: "demo-fail" },
+      el("option", { value: "", text: "Sin fallas" }), el("option", { value: "after", text: "Próximo envío: se guarda pero se pierde la respuesta" }),
+      el("option", { value: "before", text: "Próximo envío: falla antes de guardar" }));
+    failSel.value = DemoDB.failNext || "";
+    failSel.addEventListener("change", function () { DemoDB.failNext = failSel.value || null; });
+    panel.appendChild(el("section", { class: "card", style: "border:2px dashed var(--warn)" }, el("h3", { text: "Herramientas del modo demostración" }),
+      el("p", { class: "small", text: "Solo existen en ?modo=demo. Los datos son ficticios y desaparecen al cerrar la pestaña." }),
+      el("div", { class: "actions" },
+        el("button", { type: "button", class: "btn secondary small", id: "btn-seed", onclick: function () { demoSeed(40); refreshData({ force: true }); }, text: "Agregar 40 respuestas ficticias" }),
+        el("button", { type: "button", class: "btn ghost small", onclick: function () { DemoDB.rows = []; DemoDB.people = {}; DemoDB.keys = {}; DemoDB.excl = []; DemoDB.over = []; refreshData({ force: true }); }, text: "Borrar datos demo" })),
+      el("div", { class: "field", style: "margin-top:12px" }, el("label", { for: "demo-fail", text: "Simular falla de red" }), failSel)));
+  }
+}
+
+/* =====================================================================
+   ARRANQUE Y NAVEGACIÓN
+   ===================================================================== */
+document.getElementById("dlg-close").addEventListener("click", closeDialog);
+document.getElementById("dlg").addEventListener("cancel", function (e) { e.preventDefault(); closeDialog(); });
+document.getElementById("dlg").addEventListener("click", function (e) { if (e.target.id === "dlg") closeDialog(); });
+
+function route() {
+  closeDialog();
+  if (location.hash === "#/panel") {
+    document.title = "Panel del investigador · Encuesta PYMES";
+    if (P.authed) { renderPanel(); startPolling(); return; }
+    renderPanel();
+    // ¿Ya hay una sesión en esta pestaña? El servidor decide si es administrador.
+    if (!DEMO && configured()) {
+      AdminApi.session().then(function (s) { if (s && !P.authed) afterAuth(); }).catch(function () { /* sin sesión */ });
+    }
+  } else {
+    stopPolling();
+    document.title = "Encuesta sobre inventario en PYMES";
+    document.getElementById("brand-text").textContent = "Encuesta · Inventario en PYMES";
+    clear(document.getElementById("header-extra"));
+    document.getElementById("header-wrap").className = "wrap";
+    renderSurvey();
+  }
+}
+window.addEventListener("hashchange", route);
+document.addEventListener("visibilitychange", function () {
+  if (!document.hidden && P.authed && location.hash === "#/panel" && P.loadedAt && (Date.now() - P.loadedAt.getTime()) > CONFIG.POLL_SECONDS * 1000) refreshData();
+});
+
+(function init() {
+  if (DEMO) {
+    document.getElementById("demo-banner").hidden = false;
+    document.title = "[DEMO] " + document.title;
+  }
+  const foot = document.getElementById("footer-text");
+  foot.textContent = "Encuesta confidencial con fines escolares" + (CONFIG.INSTITUCION ? " · " + CONFIG.INSTITUCION : "") + ". ";
+  foot.appendChild(el("a", { href: "#/panel", text: "Acceso del investigador" }));
+  sha256hex(instrumentString()).then(function (h) { localHash = h; }).catch(function () { /* contexto no seguro */ });
+  route();
+  checkStatus();
+})();
+</script>
+</body>
+</html>
